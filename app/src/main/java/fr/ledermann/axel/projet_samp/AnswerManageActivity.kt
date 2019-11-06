@@ -13,15 +13,15 @@ class AnswerManageActivity : AppCompatActivity() {
     var answerList: ArrayList<Answer> = ArrayList()
 
     fun updateList() {
-        recyclerAnswer.adapter?.notifyItemInserted(recyclerAnswer.adapter!!.getItemCount())
+        recyclerManageAnswer.adapter?.notifyItemInserted(recyclerManageAnswer.adapter!!.getItemCount())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_answer)
 
-        recyclerAnswer.layoutManager = LinearLayoutManager(this)
-        recyclerAnswer.adapter = AnswerAdapter(this, answerList)
+        recyclerManageAnswer.layoutManager = LinearLayoutManager(this)
+        recyclerManageAnswer.adapter = AnswerManageAdapter(this, answerList)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 

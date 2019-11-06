@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_manage_quizz.*
 
-class QuizzManageActivty : AppCompatActivity() {
+class QuizzManageActivity : AppCompatActivity() {
     var quizzList: ArrayList<Quizz> = ArrayList()
+    val db: QuizzDBHelper = QuizzDBHelper(this)
 
     fun updateList() {
-        recyclerQuizz.adapter?.notifyItemInserted(recyclerQuizz.adapter!!.getItemCount())
+        recyclerManageQuizz.adapter?.notifyItemInserted(recyclerManageQuizz.adapter!!.getItemCount())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,23 +24,25 @@ class QuizzManageActivty : AppCompatActivity() {
         setContentView(R.layout.activity_manage_quizz)
         setSupportActionBar(toolbar)
 
-        recyclerQuizz.layoutManager = LinearLayoutManager(this)
-        recyclerQuizz.adapter = QuizzAdapter(this, quizzList)
+        recyclerManageQuizz.layoutManager = LinearLayoutManager(this)
+        recyclerManageQuizz.adapter = QuizzManageAdapter(this, quizzList)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 
-        fabQuizz.setOnClickListener { _ ->
+        fabQuizz.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Nouveau Quizz")
             val dialogLayout = inflater.inflate(R.layout.alert_dialog_gettext, null)
             val editText  = dialogLayout.findViewById<EditText>(R.id.textAlertDialog)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                quizzList.add(Quizz(editText.text.toString()))
-                updateList()
+                addQuizz(Quizz(editText.text.toString()))
             }
             builder.show()
         }
+
+        quizzList.addAll(db.getAllQuizz())
+        updateList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,13 +51,25 @@ class QuizzManageActivty : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_get_quizz -> {
                 val http = XmlHttpQuizz(this)
                 http.execute()
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun addQuizz(q : Quizz) {
+        q.idQuizz = db.newQuizz(q)
+        quizzList.add(q)
+        if(recyclerManageQuizz.adapter!!.hasObservers()) recyclerManageQuizz.adapter!!.notifyItemInserted(recyclerManageQuizz.adapter!!.itemCount)
+    }
+
+    fun removeQuizz(pos : Int) {
+        db.deleteQuizz(pos)
+        quizzList.removeAt(pos)
+        if(recyclerManageQuizz.adapter!!.hasObservers()) recyclerManageQuizz.adapter!!.notifyItemRemoved(pos)
     }
 }

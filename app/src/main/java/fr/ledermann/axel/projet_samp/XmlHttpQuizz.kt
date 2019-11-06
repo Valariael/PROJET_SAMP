@@ -10,7 +10,7 @@ import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.collections.ArrayList
 
-class XmlHttpQuizz (var qma : QuizzManageActivty){
+class XmlHttpQuizz (var qma : QuizzManageActivity){
     var httpTask = HttpTask()
 
     fun execute() {
@@ -95,7 +95,7 @@ class XmlHttpQuizz (var qma : QuizzManageActivty){
         }
 
         override fun onPostExecute(quizzs: List<Quizz>) {
-            qma.recyclerQuizz.adapter = QuizzAdapter(qma, quizzs as ArrayList<Quizz>)
+            for(q in quizzs) qma.addQuizz(q)
         }
     }
 }

@@ -12,15 +12,15 @@ class QuestionManageActivity : AppCompatActivity() {
     var questionList: ArrayList<Question> = ArrayList()
 
     fun updateList() {
-        recyclerQuestion.adapter?.notifyItemInserted(recyclerQuestion.adapter!!.getItemCount())
+        recyclerManageQuestion.adapter?.notifyItemInserted(recyclerManageQuestion.adapter!!.getItemCount())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_question)
 
-        recyclerQuestion.layoutManager = LinearLayoutManager(this)
-        recyclerQuestion.adapter = QuestionAdapter(this, questionList)
+        recyclerManageQuestion.layoutManager = LinearLayoutManager(this)
+        recyclerManageQuestion.adapter = QuestionManageAdapter(this, questionList)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 
