@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Projet QUIZ</string>
+    <string name="default_text">texte</string>
+    <string name="switch_text">V/F</string>
+    <string name="action_get_quizz">Télécharger les quiz</string>
+    <string name="alert_dialog_text_quizz">Entrez un titre</string>
+    <string name="action_home_start">Commencer à jouer</string>
+    <string name="action_home_manage">Gérer vos quiz</string>
+    <string name="action_home_settings">Réglages</string>
+</resources>
