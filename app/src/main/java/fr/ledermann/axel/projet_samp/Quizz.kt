@@ -1,12 +1,17 @@
 package fr.ledermann.axel.projet_samp
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.io.Serializable
 
-class Quizz(var titleQuizz : String) : Serializable{
-    var listQuestions : ArrayList<Question> = ArrayList()
-    var idQuizz: Long? = null
+data class Quizz(var titleQuizz : String) : Serializable{
+    var idQuizz : Long? = null
 
-    constructor(titleQuizz: String, listQuestions : ArrayList<Question>) : this(titleQuizz) {
-        this.listQuestions = listQuestions
+    constructor(titleQuizz: String, idQuizz: Long) : this(titleQuizz) {
+        this.idQuizz = idQuizz
+    }
+
+    override fun toString(): String {
+        return "$titleQuizz => $idQuizz"
     }
 }

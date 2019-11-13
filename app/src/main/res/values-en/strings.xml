@@ -2,8 +2,9 @@
 <resources>
     <string name="app_name">Project QUIZ</string>
     <string name="default_text">default text</string>
-    <string name="switch_text">T/F</string>
+    <string name="switch_text">F/T</string>
     <string name="action_get_quizz">Download your quizzes</string>
+    <string name="action_reset">Reset</string>
     <string name="alert_dialog_text_quizz">Type a title</string>
     <string name="action_home_start">Start playing</string>
     <string name="action_home_manage">Manage your quizzes</string>
