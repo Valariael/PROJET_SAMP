@@ -13,4 +13,9 @@
     <string name="alert_dialog_msg_noselect">Sélectionne au moins une réponse..</string>
     <string name="action_validate">Valider</string>
     <string name="action_next">Suivant</string>
+    <string name="score_text">Score :</string>
+    <string name="action_back">Retour au menu</string>
+    <string name="highscores">Meilleurs scores</string>
+    <string name="all_highscores">Tous les scores</string>
+    <string name="scorequiz_text">Quiz :</string>
 </resources>

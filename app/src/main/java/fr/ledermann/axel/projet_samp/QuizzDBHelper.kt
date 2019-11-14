@@ -4,11 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         if (db != null) {
-            db.execSQL("DROP TABLE IF EXISTS " + QuizzDBTable.NAME + ", " + QuestionDBTable.NAME + ", " + AnswerDBTable.NAME)
+            db.execSQL("DROP TABLE IF EXISTS " + QuizzDBTable.NAME + ", " + QuestionDBTable.NAME + ", " + AnswerDBTable.NAME + ", " + ScoreDBTable.NAME)
             onCreate(db)
         }
     }
@@ -17,6 +20,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         db.execSQL(DATABASE_CREATE_QUIZZ)
         db.execSQL(DATABASE_CREATE_QUESTION)
         db.execSQL(DATABASE_CREATE_ANSWER)
+        db.execSQL(DATABASE_CREATE_SCORE)
     }
 
     fun reset() {
@@ -24,6 +28,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         db.execSQL("DELETE FROM ${QuizzDBTable.NAME}")
         db.execSQL("DELETE FROM ${QuestionDBTable.NAME}")
         db.execSQL("DELETE FROM ${AnswerDBTable.NAME}")
+        db.execSQL("DELETE FROM ${ScoreDBTable.NAME}")
     }
 
     fun getQuizzs(): ArrayList<Quizz> {
@@ -97,6 +102,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
             }
             questions.close()
         }
+        //TODO : maybe delete scores or store title in score
     }
 
     fun deleteQuestion(question : Question) {
@@ -136,6 +142,16 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         return db.insert(AnswerDBTable.NAME, null, answerValues)
     }
 
+    fun newScore(score : Score): Long {
+        val db = this.writableDatabase
+        val scoreValues = ContentValues()
+        scoreValues.put(ScoreDBTable.GOOD_ANSWERS, score.goodAnswers)
+        scoreValues.put(ScoreDBTable.TOTAL_ANSWERS, score.totalAnswers)
+        scoreValues.put(ScoreDBTable.ID_QUIZZ, score.idQuizz)
+        scoreValues.put(ScoreDBTable.DATE, SimpleDateFormat("dd-mm-yyyy HH;mm", Locale.FRANCE).format(Date()))
+        return db.insert(ScoreDBTable.NAME, null, scoreValues)
+    }
+
     fun updateQuizz(quizz : Quizz) {
         val db = this.writableDatabase
         val quizzValues = ContentValues()
@@ -168,5 +184,6 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         const val DATABASE_CREATE_QUIZZ = "CREATE TABLE " + QuizzDBTable.NAME + " (" + QuizzDBTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + QuizzDBTable.TITLE + " TEXT NOT NULL);"
         const val DATABASE_CREATE_QUESTION = "CREATE TABLE " + QuestionDBTable.NAME + " (" + QuestionDBTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + QuestionDBTable.TEXT + " TEXT NOT NULL, " + QuestionDBTable.ID_QUIZZ + " INTEGER NOT NULL);"
         const val DATABASE_CREATE_ANSWER = "CREATE TABLE " + AnswerDBTable.NAME + " (" + AnswerDBTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + AnswerDBTable.TEXT + " TEXT NOT NULL, " + AnswerDBTable.IS_OK + " INTEGER NOT NULL, " + AnswerDBTable.ID_QUESTION + " INTEGER NOT NULL);"
+        const val DATABASE_CREATE_SCORE = "CREATE TABLE " + ScoreDBTable.NAME + " (" + ScoreDBTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ScoreDBTable.GOOD_ANSWERS + " INTEGER NOT NULL, " + ScoreDBTable.TOTAL_ANSWERS + " INTEGER NOT NULL, " + ScoreDBTable.ID_QUIZZ + " INTEGER NOT NULL, " + ScoreDBTable.DATE + " TEXT NOT NULL);"
     }
 }

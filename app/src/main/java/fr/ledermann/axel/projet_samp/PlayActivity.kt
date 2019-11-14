@@ -1,5 +1,6 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_play.*
 
@@ -124,14 +126,34 @@ class PlayActivity : AppCompatActivity() {
                 btnNext.text = getString(R.string.action_next)
                 btnNext.setOnClickListener {
                     questionIndex++
-                    //TODO : end quizz
-                    (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
-                    selectedAnswers = ArrayList()
                     doneQuestionsCount++
-                    updateDisplay()
-                    (recyclerAnswers.adapter as AnswerAdapter).notifyDataSetChanged()
-                    setNextBtnListener()
+
+                    if(questionIndex == listQuestions.size) {
+                        val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz!!.idQuizz!!)
+                        db.newScore(score)
+
+                        val intent = Intent(this, ScoreActivity::class.java)
+                        intent.putExtra("KEY_QUIZZ_TITLE", currentQuizz!!.titleQuizz)
+                        intent.putExtra("KEY_SCORE", score)
+                        startActivityForResult(intent, 1);
+                    } else {
+                        (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
+
+                        selectedAnswers = ArrayList()
+                        updateDisplay()
+                        (recyclerAnswers.adapter as AnswerAdapter).notifyDataSetChanged()
+
+                        setNextBtnListener()
+                    }
                 }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
             }
         }
     }
