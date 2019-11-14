@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizzActivity"></activity>
+        <activity android:name=".PlayActivity"></activity>
+        <activity android:name=".QuizzActivity" />
         <activity
             android:name=".QuizzManageActivity"
             android:theme="@style/AppTheme.NoActionBar" />

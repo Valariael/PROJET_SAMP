@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_quizz.*
 
 class QuizzActivity : AppCompatActivity() {
     var quizzList: ArrayList<Quizz> = ArrayList()
-    val db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper = QuizzDBHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

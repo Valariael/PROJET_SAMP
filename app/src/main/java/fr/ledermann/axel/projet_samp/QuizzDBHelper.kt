@@ -2,9 +2,9 @@ package fr.ledermann.axel.projet_samp
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -22,9 +22,9 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
     fun reset() {
         val db = this.writableDatabase
-        db.execSQL("DELETE FROM ${QuizzDBTable.NAME}");
-        db.execSQL("DELETE FROM ${QuestionDBTable.NAME}");
-        db.execSQL("DELETE FROM ${AnswerDBTable.NAME}");
+        db.execSQL("DELETE FROM ${QuizzDBTable.NAME}")
+        db.execSQL("DELETE FROM ${QuestionDBTable.NAME}")
+        db.execSQL("DELETE FROM ${AnswerDBTable.NAME}")
     }
 
     fun getQuizzs(): ArrayList<Quizz> {
@@ -53,10 +53,10 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         if (cQuestion.moveToFirst()) {
             do {
-                val quizz = Question(cQuestion.getString(cQuestion.getColumnIndex(QuestionDBTable.TEXT)))
-                quizz.idQuizz = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID_QUIZZ))
-                quizz.idQuestion = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID))
-                questionList.add(quizz)
+                val question = Question(cQuestion.getString(cQuestion.getColumnIndex(QuestionDBTable.TEXT)))
+                question.idQuizz = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID_QUIZZ))
+                question.idQuestion = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID))
+                questionList.add(question)
             } while (cQuestion.moveToNext())
         }
         cQuestion.close()
@@ -74,6 +74,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
             do {
                 val answer = Answer(cAnswer.getString(cAnswer.getColumnIndex(AnswerDBTable.TEXT)))
                 answer.isOk = cAnswer.getInt(cAnswer.getColumnIndex(AnswerDBTable.IS_OK))>0
+                Log.d("looooooooooooooogxx: ", answer.isOk.toString() + " : " + cAnswer.getInt(cAnswer.getColumnIndex(AnswerDBTable.IS_OK)))
                 answer.idAnswer = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID))
                 answer.idQuestion = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID_QUESTION))
                 answerList.add(answer)
@@ -123,14 +124,17 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         val db = this.writableDatabase
         val questionValues = ContentValues()
         questionValues.put(QuestionDBTable.TEXT, question.textQuestion)
+        questionValues.put(QuestionDBTable.ID_QUIZZ, question.idQuizz)
         return db.insert(QuestionDBTable.NAME, null, questionValues)
     }
 
     fun newAnswer(answer : Answer): Long {
         val db = this.writableDatabase
         val answerValues = ContentValues()
+        answerValues.put(AnswerDBTable.ID_QUESTION, answer.idQuestion)
         answerValues.put(AnswerDBTable.TEXT, answer.answer)
-        answerValues.put(AnswerDBTable.IS_OK, 0)
+        if(answer.isOk) answerValues.put(AnswerDBTable.IS_OK, 1)
+        else answerValues.put(AnswerDBTable.IS_OK, 0)
         return db.insert(AnswerDBTable.NAME, null, answerValues)
     }
 
@@ -152,8 +156,10 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
     fun updateAnswer(answer : Answer, idQuestion: Long) {
         val db = this.writableDatabase
         val answerValues = ContentValues()
+        var isok = 0
+        if(answer.isOk) isok = 1
         answerValues.put(AnswerDBTable.ID_QUESTION, idQuestion)
-        answerValues.put(AnswerDBTable.IS_OK, answer.isOk)
+        answerValues.put(AnswerDBTable.IS_OK, isok)
         answerValues.put(AnswerDBTable.TEXT, answer.answer)
         db.update(AnswerDBTable.NAME, answerValues, "${AnswerDBTable.ID} = ?", arrayOf(answer.idAnswer.toString()))
     }

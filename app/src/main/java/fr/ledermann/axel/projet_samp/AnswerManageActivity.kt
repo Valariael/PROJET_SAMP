@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_manage_answer.*
 class AnswerManageActivity : AppCompatActivity() {
     var currentQuestion : Question? = null
     private var listAnswers : ArrayList<Answer> = ArrayList()
-    val db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper = QuizzDBHelper(this)
 
     private fun updateList() {
         recyclerManageAnswer.adapter?.notifyItemInserted(recyclerManageAnswer.adapter!!.itemCount)
@@ -40,7 +40,7 @@ class AnswerManageActivity : AppCompatActivity() {
             editText.hint = "Entrez une réponse"
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addAnswer(Answer(editText.text.toString()))
+                addAnswer(Answer(editText.text.toString(), false, currentQuestion!!.idQuestion!!))
                 updateList()
             }
             builder.show()
@@ -72,6 +72,7 @@ class AnswerManageActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         currentQuestion = savedInstanceState.getSerializable("SAVE_QUESTION") as Question?
+        db = QuizzDBHelper(this)
         listAnswers = db.getAnswers(currentQuestion!!.idQuestion!!)
         updateList()
     }

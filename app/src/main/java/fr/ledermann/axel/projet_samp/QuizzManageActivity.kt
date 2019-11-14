@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 class QuizzManageActivity : AppCompatActivity() {
     var quizzList: ArrayList<Quizz> = ArrayList()
-    val db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper = QuizzDBHelper(this)
 
     fun updateList() {
         recyclerManageQuizz.adapter?.notifyItemInserted(recyclerManageQuizz.adapter!!.itemCount)
@@ -65,6 +65,7 @@ class QuizzManageActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+        db = QuizzDBHelper(this)
         quizzList = db.getQuizzs()
         updateList()
     }

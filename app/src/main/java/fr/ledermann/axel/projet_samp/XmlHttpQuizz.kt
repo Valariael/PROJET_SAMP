@@ -58,12 +58,14 @@ class XmlHttpQuizz (var qma : QuizzManageActivity){
 
                             val goodAnswerNode = questionEl.getElementsByTagName("Reponse").item(0) as Element
                             val goodAnswer = Integer.parseInt(goodAnswerNode.getAttribute("valeur"))-1
+                            Log.d("looooooooooooooogxx: ", goodAnswer.toString())
                             val answerNodes = questionEl.getElementsByTagName("Proposition")
 
                             var k = 0
                             while(k < answerNodes.length) {
                                 val answerEl = answerNodes.item(k) as Element
                                 val answerName = answerEl.childNodes.item(0).textContent.trim()
+                                Log.d("looooooooooooooogxx: ", k.toString() + " : " + answerName)
 
                                 if(k == goodAnswer) qdbh.newAnswer(Answer(answerName, true, idQuestion))
                                 else qdbh.newAnswer(Answer(answerName, false, idQuestion))

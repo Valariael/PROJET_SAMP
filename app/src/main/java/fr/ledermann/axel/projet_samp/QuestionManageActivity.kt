@@ -3,6 +3,7 @@ package fr.ledermann.axel.projet_samp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_manage_question.*
 
 class QuestionManageActivity : AppCompatActivity() {
     var currentQuizz : Quizz? = null
-    val db : QuizzDBHelper = QuizzDBHelper(this)
+    var db : QuizzDBHelper = QuizzDBHelper(this)
     private var listQuestions : ArrayList<Question> = ArrayList()
 
     private fun updateList() {
@@ -40,7 +41,7 @@ class QuestionManageActivity : AppCompatActivity() {
             editText.hint = "Entrez une question"
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addQuestion(Question(editText.text.toString()))
+                addQuestion(Question(editText.text.toString(), currentQuizz!!.idQuizz!!))
                 updateList()
             }
             builder.show()
@@ -72,6 +73,7 @@ class QuestionManageActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         currentQuizz = savedInstanceState.getSerializable("SAVE_QUIZZ") as Quizz?
+        db = QuizzDBHelper(this)
         listQuestions = db.getQuestions(currentQuizz!!.idQuizz!!)
         updateList()
     }
