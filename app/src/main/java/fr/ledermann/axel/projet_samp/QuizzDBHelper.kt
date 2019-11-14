@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -74,7 +73,6 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
             do {
                 val answer = Answer(cAnswer.getString(cAnswer.getColumnIndex(AnswerDBTable.TEXT)))
                 answer.isOk = cAnswer.getInt(cAnswer.getColumnIndex(AnswerDBTable.IS_OK))>0
-                Log.d("looooooooooooooogxx: ", answer.isOk.toString() + " : " + cAnswer.getInt(cAnswer.getColumnIndex(AnswerDBTable.IS_OK)))
                 answer.idAnswer = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID))
                 answer.idQuestion = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID_QUESTION))
                 answerList.add(answer)

@@ -2,7 +2,6 @@ package fr.ledermann.axel.projet_samp
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +38,6 @@ class AnswerManageAdapter (var ama : AnswerManageActivity, var answerList : Arra
             }
         })
 
-        Log.d("looooooooooooooogxx: ", answerList[position].isOk.toString())
         holder.switch.isChecked = answerList[position].isOk
         holder.switch.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             answerList[position].isOk = b
