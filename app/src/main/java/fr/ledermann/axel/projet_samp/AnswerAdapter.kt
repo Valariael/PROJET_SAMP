@@ -26,6 +26,7 @@ class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) 
             pa.toggleAnswer(holder.button, position)
         }
         if(isDisplayingAnswers && answerList[position].isOk) holder.button.background = pa.resources.getDrawable(R.drawable.button_background_correct)
+        else holder.button.background = pa.resources.getDrawable(R.drawable.button_background)
     }
 
     override fun getItemCount(): Int {

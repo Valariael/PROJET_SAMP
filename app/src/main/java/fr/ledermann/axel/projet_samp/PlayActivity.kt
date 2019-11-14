@@ -3,6 +3,7 @@ package fr.ledermann.axel.projet_samp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -25,7 +26,8 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun updateDisplay() {
-        currentAnswers = listAllAnswers[questionIndex]
+        currentAnswers.clear()
+        currentAnswers.addAll(listAllAnswers[questionIndex])
         textQuestion.text = listQuestions[questionIndex].textQuestion
     }
 
@@ -70,7 +72,6 @@ class PlayActivity : AppCompatActivity() {
         selectedAnswers = savedInstanceState.getIntegerArrayList("SAVE_SELECTED_ANSWERS")!!
         db = QuizzDBHelper(this)
         getData()
-        //updateDisplay()
         updateList()
     }
 
@@ -101,14 +102,16 @@ class PlayActivity : AppCompatActivity() {
                 builder.show()
             } else {
                 (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = true
-                for(i in selectedAnswers) {
-                    (recyclerAnswers.adapter as AnswerAdapter).notifyItemChanged(i)
-                }
 
                 var wellPlayed = true
                 for(a in currentAnswers) {
-                    if(a.isOk && !selectedAnswers.contains(currentAnswers.indexOf(a))) wellPlayed = false
-                    else if(a.isOk) selectedAnswers.remove(currentAnswers.indexOf(a))
+                    if(a.isOk && !selectedAnswers.contains(currentAnswers.indexOf(a))) {
+                        wellPlayed = false
+                        (recyclerAnswers.adapter as AnswerAdapter).notifyItemChanged(currentAnswers.indexOf(a))
+                    } else if(a.isOk) {
+                        selectedAnswers.remove(currentAnswers.indexOf(a))
+                        (recyclerAnswers.adapter as AnswerAdapter).notifyItemChanged(currentAnswers.indexOf(a))
+                    }
                 }
 
                 if(selectedAnswers.isEmpty() && wellPlayed) {
@@ -121,12 +124,12 @@ class PlayActivity : AppCompatActivity() {
                 btnNext.text = getString(R.string.action_next)
                 btnNext.setOnClickListener {
                     questionIndex++
+                    //TODO : end quizz
                     (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
                     selectedAnswers = ArrayList()
                     doneQuestionsCount++
                     updateDisplay()
                     (recyclerAnswers.adapter as AnswerAdapter).notifyDataSetChanged()
-                    //updateList()
                     setNextBtnListener()
                 }
             }
