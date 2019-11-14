@@ -15,6 +15,9 @@ class MainActivity : AppCompatActivity() {
         startBtn.setOnClickListener {
             startActivity(Intent(this, QuizzActivity::class.java))
         }
+        highscoreBtn.setOnClickListener {
+            startActivity(Intent(this, HighscoreActivity::class.java))
+        }
         manageBtn.setOnClickListener {
             startActivity(Intent(this, QuizzManageActivity::class.java))
         }

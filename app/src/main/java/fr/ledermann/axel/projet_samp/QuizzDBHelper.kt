@@ -11,7 +11,10 @@ import kotlin.collections.ArrayList
 class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         if (db != null) {
-            db.execSQL("DROP TABLE IF EXISTS " + QuizzDBTable.NAME + ", " + QuestionDBTable.NAME + ", " + AnswerDBTable.NAME + ", " + ScoreDBTable.NAME)
+            db.execSQL("DROP TABLE IF EXISTS " + QuizzDBTable.NAME)
+            db.execSQL("DROP TABLE IF EXISTS " + QuestionDBTable.NAME)
+            db.execSQL("DROP TABLE IF EXISTS " + AnswerDBTable.NAME)
+            db.execSQL("DROP TABLE IF EXISTS " + ScoreDBTable.NAME)
             onCreate(db)
         }
     }
@@ -21,14 +24,6 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         db.execSQL(DATABASE_CREATE_QUESTION)
         db.execSQL(DATABASE_CREATE_ANSWER)
         db.execSQL(DATABASE_CREATE_SCORE)
-    }
-
-    fun reset() {
-        val db = this.writableDatabase
-        db.execSQL("DELETE FROM ${QuizzDBTable.NAME}")
-        db.execSQL("DELETE FROM ${QuestionDBTable.NAME}")
-        db.execSQL("DELETE FROM ${AnswerDBTable.NAME}")
-        db.execSQL("DELETE FROM ${ScoreDBTable.NAME}")
     }
 
     fun getQuizzs(): ArrayList<Quizz> {
@@ -86,6 +81,29 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         cAnswer.close()
 
         return answerList
+    }
+
+    fun getScores(highscores : Boolean, idQuizz: Long): ArrayList<Score> {
+        val scoreList = ArrayList<Score>()
+        var selectScoreQuery = "SELECT  * FROM ${ScoreDBTable.NAME} WHERE ${ScoreDBTable.ID_QUIZZ} = ?"
+        if(highscores) selectScoreQuery += " ORDER BY ${ScoreDBTable.GOOD_ANSWERS} DESC LIMIT 10"
+        val db = this.readableDatabase
+        val cScore = db.rawQuery(selectScoreQuery, arrayOf(idQuizz.toString()))
+
+        if (cScore.moveToFirst()) {
+            do {
+                val score = Score(cScore.getInt(cScore.getColumnIndex(ScoreDBTable.GOOD_ANSWERS)),
+                    cScore.getInt(cScore.getColumnIndex(ScoreDBTable.TOTAL_ANSWERS)),
+                    cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID_QUIZZ)),
+                    cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID)),
+                    cScore.getString(cScore.getColumnIndex(ScoreDBTable.DATE)))
+                score.idQuizz = cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID))
+                scoreList.add(score)
+            } while (cScore.moveToNext())
+        }
+        cScore.close()
+
+        return scoreList
     }
 
     fun deleteQuizz(quizz : Quizz) {
@@ -148,7 +166,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         scoreValues.put(ScoreDBTable.GOOD_ANSWERS, score.goodAnswers)
         scoreValues.put(ScoreDBTable.TOTAL_ANSWERS, score.totalAnswers)
         scoreValues.put(ScoreDBTable.ID_QUIZZ, score.idQuizz)
-        scoreValues.put(ScoreDBTable.DATE, SimpleDateFormat("dd-mm-yyyy HH;mm", Locale.FRANCE).format(Date()))
+        scoreValues.put(ScoreDBTable.DATE, SimpleDateFormat("dd-mm-yyyy HH:mm", Locale.FRANCE).format(Date()))
         return db.insert(ScoreDBTable.NAME, null, scoreValues)
     }
 

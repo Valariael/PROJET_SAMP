@@ -17,5 +17,6 @@
     <string name="action_back">Back to menu</string>
     <string name="highscores">Best scores</string>
     <string name="all_highscores">All scores</string>
+    <string name="switch_highscores_text">See all</string>
     <string name="scorequiz_text">Quiz :</string>
 </resources>
