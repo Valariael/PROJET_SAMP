@@ -84,12 +84,6 @@ class QuizzManageActivity : AppCompatActivity() {
                 updateList()
                 true
             }
-            R.id.action_reset -> {
-                db.onUpgrade(db.writableDatabase, 1, 2)
-                quizzList = ArrayList()
-                updateList()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }

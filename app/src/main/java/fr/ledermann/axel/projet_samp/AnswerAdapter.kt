@@ -22,8 +22,11 @@ class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.button.text = answerList[position].answer
-        holder.button.setOnClickListener{
-            pa.toggleAnswer(holder.button, position)
+        holder.button.setOnClickListener(null)
+        if(!isDisplayingAnswers) {
+            holder.button.setOnClickListener{
+                pa.toggleAnswer(holder.button, position)
+            }
         }
         if(isDisplayingAnswers && answerList[position].isOk) holder.button.background = pa.resources.getDrawable(R.drawable.button_background_correct)
         else holder.button.background = pa.resources.getDrawable(R.drawable.button_background)

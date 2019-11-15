@@ -1,5 +1,6 @@
 package fr.ledermann.axel.projet_samp
 
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -42,6 +43,11 @@ class AnswerManageAdapter (var ama : AnswerManageActivity, var answerList : Arra
         holder.switch.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             answerList[position].isOk = b
             ama.db.updateAnswer(answerList[position], ama.currentQuestion!!.idQuestion!!)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.switch.setShowText(true)
+        } else {
+            holder.switch.text = ama.getString(R.string.switch_text)
         }
     }
 

@@ -2,7 +2,9 @@
 <resources>
     <string name="app_name">Project QUIZ</string>
     <string name="default_text">default text</string>
-    <string name="switch_text">F/T</string>
+    <string name="switch_text">T/F</string>
+    <string name="switch_text_true">T</string>
+    <string name="switch_text_false">F</string>
     <string name="action_get_quizz">Download your quizzes</string>
     <string name="action_reset">Reset</string>
     <string name="alert_dialog_text_quizz">Type a title</string>
@@ -15,8 +17,13 @@
     <string name="action_next">Next</string>
     <string name="score_text">Score :</string>
     <string name="action_back">Back to menu</string>
+    <string name="action_french">French</string>
+    <string name="action_english">English</string>
     <string name="highscores">Best scores</string>
     <string name="all_highscores">All scores</string>
     <string name="switch_highscores_text">See all</string>
     <string name="scorequiz_text">Quiz :</string>
+    <string name="toast_reset">Quizz data reset.</string>
+    <string name="toast_good">Correct, well played.</string>
+    <string name="toast_bad">Wrong answer..</string>
 </resources>

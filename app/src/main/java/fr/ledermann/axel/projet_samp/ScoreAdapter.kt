@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 class ScoreAdapter (var ha : HighscoreActivity, var scoreList : ArrayList<Score>) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
     class ViewHolder (v : View) : RecyclerView.ViewHolder(v) {
         var indexText : TextView = v.findViewById(R.id.highscoreIndexText)
-        var scoreText : TextView = v.findViewById(R.id.highscoreDateText)
-        var dateText : TextView = v.findViewById(R.id.highscoreScoreText)
+        var scoreText : TextView = v.findViewById(R.id.highscoreScoreText)
+        var dateText : TextView = v.findViewById(R.id.highscoreDateText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

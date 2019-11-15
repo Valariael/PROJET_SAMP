@@ -1,9 +1,12 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_play.*
 
 class PlayActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     private var questionIndex = 0
     private var doneQuestionsCount = 0
     private var correctAnswerCount = 0
@@ -43,6 +47,7 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         currentQuizz = intent.getSerializableExtra("KEY_QUIZZ_PLAY") as Quizz?
         getData()
@@ -82,6 +87,12 @@ class PlayActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
+        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+    }
+
     fun toggleAnswer(b : Button, index : Int) {
         if(selectedAnswers.contains(index)) {
             b.background = resources.getDrawable(R.drawable.button_background)
@@ -118,9 +129,9 @@ class PlayActivity : AppCompatActivity() {
 
                 if(selectedAnswers.isEmpty() && wellPlayed) {
                     correctAnswerCount++
-                    Toast.makeText(this@PlayActivity, "Correct ! Bien joué !", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@PlayActivity, getString(R.string.toast_good), Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this@PlayActivity, "Erreur ! Dommage..", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@PlayActivity, getString(R.string.toast_bad), Toast.LENGTH_LONG).show()
                 }
 
                 btnNext.text = getString(R.string.action_next)
@@ -135,7 +146,7 @@ class PlayActivity : AppCompatActivity() {
                         val intent = Intent(this, ScoreActivity::class.java)
                         intent.putExtra("KEY_QUIZZ_TITLE", currentQuizz!!.titleQuizz)
                         intent.putExtra("KEY_SCORE", score)
-                        startActivityForResult(intent, 1);
+                        startActivityForResult(intent, 1)
                     } else {
                         (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
 
@@ -153,7 +164,7 @@ class PlayActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                this.finish();
+                this.finish()
             }
         }
     }

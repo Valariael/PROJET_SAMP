@@ -1,11 +1,15 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_score.*
 
 class ScoreActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     private var currentScore : Score? = null
     private var quizzTitle : String? = null
 
@@ -17,6 +21,7 @@ class ScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         currentScore = intent.getSerializableExtra("KEY_SCORE") as Score?
         quizzTitle = intent.getStringExtra("KEY_QUIZZ_TITLE")
@@ -24,8 +29,8 @@ class ScoreActivity : AppCompatActivity() {
         displayScore()
 
         backToMenuBtn.setOnClickListener {
-            setResult(RESULT_OK, null);
-            finish();
+            setResult(RESULT_OK, null)
+            finish()
         }
     }
 
@@ -41,5 +46,11 @@ class ScoreActivity : AppCompatActivity() {
         quizzTitle = savedInstanceState.getString("SAVE_QUIZZ_TITLE")
 
         displayScore()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
+        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 }

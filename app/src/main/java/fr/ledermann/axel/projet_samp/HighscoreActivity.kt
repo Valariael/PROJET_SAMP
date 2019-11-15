@@ -1,8 +1,11 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.preference.PreferenceManager
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_highscore.*
@@ -12,6 +15,7 @@ import android.widget.AdapterView
 
 
 class HighscoreActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     private var listScores : ArrayList<Score> = ArrayList()
     private var listQuizz : ArrayList<Quizz> = ArrayList()
     private var allScores = false
@@ -30,13 +34,14 @@ class HighscoreActivity : AppCompatActivity() {
             idCurrentQuizz = listQuizz[0].idQuizz!!
             listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
         }
-        else if(idCurrentQuizz == null) //TODO
+        else if(idCurrentQuizz == null) //TODO empty msg
         else listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_highscore)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         getData()
 
@@ -90,5 +95,11 @@ class HighscoreActivity : AppCompatActivity() {
     override fun onDestroy() {
         db.close()
         super.onDestroy()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
+        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 }
