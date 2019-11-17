@@ -16,16 +16,18 @@
         android:layout_marginTop="2dp"
         android:inputType="textMultiLine"
         android:text="@string/default_text"
+        android:textSize="14sp"
+        android:maxWidth="320dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editBtnAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:text="edit"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/button_background_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

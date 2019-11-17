@@ -17,6 +17,7 @@
         android:maxLines="4"
         android:text="@string/default_text"
         android:textSize="14sp"
+        android:maxWidth="310dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

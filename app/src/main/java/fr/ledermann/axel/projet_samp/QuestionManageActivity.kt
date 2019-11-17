@@ -1,8 +1,11 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_manage_question.*
 
 class QuestionManageActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     var currentQuizz : Quizz? = null
     var db : QuizzDBHelper = QuizzDBHelper(this)
     private var listQuestions : ArrayList<Question> = ArrayList()
@@ -23,10 +27,12 @@ class QuestionManageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_question)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         currentQuizz = intent.getSerializableExtra("KEY_QUIZZ") as Quizz?
         listQuestions = db.getQuestions(currentQuizz!!.idQuizz!!)
 
+        manageQuestionQuizzTitle.text = currentQuizz!!.titleQuizz
         recyclerManageQuestion.layoutManager = LinearLayoutManager(this)
         recyclerManageQuestion.adapter = QuestionManageAdapter(this, listQuestions)
 
@@ -34,10 +40,10 @@ class QuestionManageActivity : AppCompatActivity() {
 
         fabQuestion.setOnClickListener {
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("Nouvelle Question")
+            builder.setTitle(getString(R.string.alert_dialog_title_question))
             val dialogLayout = inflater.inflate(R.layout.alert_dialog_gettext, null)
             val editText  = dialogLayout.findViewById<EditText>(R.id.textAlertDialog)
-            editText.hint = "Entrez une question"
+            editText.hint = getString(R.string.alert_dialog_title_answer)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
                 addQuestion(Question(editText.text.toString(), currentQuizz!!.idQuizz!!))
@@ -80,6 +86,12 @@ class QuestionManageActivity : AppCompatActivity() {
     override fun onDestroy() {
         db.close()
         super.onDestroy()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
+        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 
     fun addQuestion(q : Question) {

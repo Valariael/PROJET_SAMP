@@ -1,6 +1,9 @@
 package fr.ledermann.axel.projet_samp
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 
 class QuizzManageActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     var quizzList: ArrayList<Quizz> = ArrayList()
     var db: QuizzDBHelper = QuizzDBHelper(this)
 
@@ -25,7 +29,7 @@ class QuizzManageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_quizz)
-        setSupportActionBar(toolbar)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         recyclerManageQuizz.layoutManager = LinearLayoutManager(this)
         quizzList = db.getQuizzs()
@@ -35,14 +39,22 @@ class QuizzManageActivity : AppCompatActivity() {
 
         fabQuizz.setOnClickListener {
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("Nouveau Quizz")
+            builder.setTitle(getString(R.string.alert_dialog_title_quizz))
             val dialogLayout = inflater.inflate(R.layout.alert_dialog_gettext, null)
             val editText  = dialogLayout.findViewById<EditText>(R.id.textAlertDialog)
+            editText.hint = getString(R.string.alert_dialog_hint_quizz)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
                 addQuizz(Quizz(editText.text.toString()))
             }
             builder.show()
+        }
+
+        getQuizzBtn.setOnClickListener {
+            val http = XmlHttpQuizz(this)
+            http.execute()
+            quizzList = db.getQuizzs()
+            updateList()
         }
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -70,27 +82,15 @@ class QuizzManageActivity : AppCompatActivity() {
         updateList()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_manage_quizz, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_get_quizz -> {
-                val http = XmlHttpQuizz(this)
-                http.execute()
-                quizzList = db.getQuizzs()
-                updateList()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onDestroy() {
         db.close()
         super.onDestroy()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
+        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 
     fun addQuizz(q : Quizz) {

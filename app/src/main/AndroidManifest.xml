@@ -12,19 +12,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".HighscoreActivity" />
-        <activity android:name=".ScoreActivity" />
-        <activity android:name=".PlayActivity" />
-        <activity android:name=".QuizzActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".HighscoreActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ScoreActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PlayActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".QuizzActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".QuizzManageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AnswerManageActivity" />
-        <activity android:name=".QuestionManageActivity" />
+        <activity
+            android:name=".AnswerManageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".QuestionManageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

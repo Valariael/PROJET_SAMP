@@ -86,7 +86,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
     fun getScores(highscores : Boolean, idQuizz: Long): ArrayList<Score> {
         val scoreList = ArrayList<Score>()
         var selectScoreQuery = "SELECT  * FROM ${ScoreDBTable.NAME} WHERE ${ScoreDBTable.ID_QUIZZ} = ?"
-        if(highscores) selectScoreQuery += " ORDER BY ${ScoreDBTable.GOOD_ANSWERS} DESC LIMIT 10"
+        if(highscores) selectScoreQuery += " LIMIT 10 ORDER BY ${ScoreDBTable.GOOD_ANSWERS} DESC"
         val db = this.readableDatabase
         val cScore = db.rawQuery(selectScoreQuery, arrayOf(idQuizz.toString()))
 
@@ -166,7 +166,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         scoreValues.put(ScoreDBTable.GOOD_ANSWERS, score.goodAnswers)
         scoreValues.put(ScoreDBTable.TOTAL_ANSWERS, score.totalAnswers)
         scoreValues.put(ScoreDBTable.ID_QUIZZ, score.idQuizz)
-        scoreValues.put(ScoreDBTable.DATE, SimpleDateFormat("dd-mm-yyyy HH:mm", Locale.FRANCE).format(Date()))
+        scoreValues.put(ScoreDBTable.DATE, SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.FRANCE).format(Date()))
         return db.insert(ScoreDBTable.NAME, null, scoreValues)
     }
 

@@ -34,6 +34,7 @@ class PlayActivity : AppCompatActivity() {
     private fun updateDisplay() {
         currentAnswers.clear()
         currentAnswers.addAll(listAllAnswers[questionIndex])
+        titleQuizzText.text = currentQuizz!!.titleQuizz
         textQuestion.text = listQuestions[questionIndex].textQuestion
     }
 

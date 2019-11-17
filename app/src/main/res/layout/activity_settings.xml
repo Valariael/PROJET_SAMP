@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SettingsActivity">
 
+    <TextView
+        android:id="@+id/quizzPlayText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:text="@string/language_text"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/frenchBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30sp"
-        android:layout_marginTop="60sp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30sp"
         android:background="@drawable/button_background"
         android:text="@string/action_french"
@@ -32,12 +48,27 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/quizzPlayText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="monospace"
+        android:text="@string/advanced_text"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/resetBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30sp"
-        android:layout_marginTop="60sp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30sp"
         android:background="@drawable/button_background"
         android:text="@string/action_reset"
