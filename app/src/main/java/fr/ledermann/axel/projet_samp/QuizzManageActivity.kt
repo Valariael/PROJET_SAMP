@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,8 +51,6 @@ class QuizzManageActivity : AppCompatActivity() {
         getQuizzBtn.setOnClickListener {
             val http = XmlHttpQuizz(this)
             http.execute()
-            quizzList = db.getQuizzs()
-            updateList()
         }
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -97,7 +93,7 @@ class QuizzManageActivity : AppCompatActivity() {
         q.idQuizz = db.newQuizz(q)
         quizzList.add(q)
 
-        if(recyclerManageQuizz.adapter!!.hasObservers()) recyclerManageQuizz.adapter!!.notifyItemInserted(recyclerManageQuizz.adapter!!.itemCount)
+        updateList()
     }
 
     fun removeQuizz(pos : Int) {

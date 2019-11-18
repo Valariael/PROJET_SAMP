@@ -98,7 +98,7 @@ class AnswerManageActivity : AppCompatActivity() {
         a.idAnswer = db.newAnswer(a)
         listAnswers.add(a)
 
-        if(recyclerManageAnswer.adapter!!.hasObservers()) recyclerManageAnswer.adapter!!.notifyItemInserted(recyclerManageAnswer.adapter!!.itemCount)
+        updateList()
     }
 
     fun removeAnswer(pos : Int) {

@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5sp"
-    android:orientation="vertical">
+    android:layout_margin="5sp">
 
-    <EditText
-        android:id="@+id/textAnswerEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:inputType="textMultiLine|textCapSentences"
-        android:maxLines="4"
-        android:text="@string/default_text"
-        android:textSize="14sp"
-        android:maxWidth="310dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Switch
-        android:id="@+id/switchAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="7dp"
-        android:textColor="#FFFFFF"
-        android:textOff="@string/switch_text_false"
-        android:textOn="@string/switch_text_true"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/textAnswerEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxWidth="320dp"
+            android:maxLines="4"
+            android:minWidth="80dp"
+            android:text="@string/default_text"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Switch
+            android:id="@+id/switchAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="7dp"
+            android:textColor="#FFFFFF"
+            android:textOff="@string/switch_text_false"
+            android:textOn="@string/switch_text_true"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

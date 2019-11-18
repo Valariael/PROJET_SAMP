@@ -6,20 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".QuestionManageActivity">
 
-    <TextView
-        android:id="@+id/manageQuestionText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="monospace"
-        android:text="@string/manage_question_text"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/manageQuestionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="monospace"
+            android:text="@string/manage_question_text"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manageQuestionQuizzTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/default_text"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerManageQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabQuestion"
@@ -33,24 +54,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerManageQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/manageQuestionQuizzTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/default_text"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manageQuestionText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

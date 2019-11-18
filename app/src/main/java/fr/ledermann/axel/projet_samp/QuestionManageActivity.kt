@@ -98,7 +98,7 @@ class QuestionManageActivity : AppCompatActivity() {
         q.idQuestion = db.newQuestion(q)
         listQuestions.add(q)
 
-        if(recyclerManageQuestion.adapter!!.hasObservers()) recyclerManageQuestion.adapter!!.notifyItemInserted(recyclerManageQuestion.adapter!!.itemCount)
+        updateList()
     }
 
     fun removeQuestion(pos : Int) {

@@ -1,21 +1,13 @@
 package fr.ledermann.axel.projet_samp
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -53,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         val changedLanguage = sharedPreferences.getBoolean("changed_language", false)
 
         if(changedLanguage) {
-            Log.d("loooooooog", "restart")
             finish()
             overridePendingTransition(0, 0)
             val intent = intent

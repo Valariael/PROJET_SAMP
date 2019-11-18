@@ -1,21 +1,13 @@
 package fr.ledermann.axel.projet_samp
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_settings.*
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
-import android.util.Log
-
 
 const val SELECTED_LANGUAGE = "language"
 
