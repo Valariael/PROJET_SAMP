@@ -3,6 +3,7 @@ package fr.ledermann.axel.projet_samp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -58,6 +59,9 @@ class PlayActivity : AppCompatActivity() {
         recyclerAnswers.adapter = AnswerAdapter(this, currentAnswers)
 
         setNextBtnListener()
+        btnSkip.setOnClickListener {
+            endOrContinueQuizz()
+        }
 
         updateList()
     }
@@ -105,14 +109,17 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun setNextBtnListener() {
+        btnSkip.isEnabled = true
+        btnSkip.isClickable = true
+        btnSkip.setBackgroundResource(R.drawable.button_background)
+
         btnNext.text = getString(R.string.action_validate)
         btnNext.setOnClickListener {
-            //TODO delete if ???
             if(selectedAnswers.isEmpty()) {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.alert_dialog_title_noselect))
                 builder.setMessage(getString(R.string.alert_dialog_msg_noselect))
-                builder.setPositiveButton("OK", null)
+                builder.setPositiveButton("OK", null) //TODO allow force validation ?
                 builder.show()
             } else {
                 (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = true
@@ -135,30 +142,39 @@ class PlayActivity : AppCompatActivity() {
                     Toast.makeText(this@PlayActivity, getString(R.string.toast_bad), Toast.LENGTH_LONG).show()
                 }
 
+                btnSkip.isEnabled = false
+                btnSkip.isClickable = false
+                btnSkip.setBackgroundResource(R.drawable.button_background_disabled)
+
                 btnNext.text = getString(R.string.action_next)
                 btnNext.setOnClickListener {
-                    questionIndex++
                     doneQuestionsCount++
 
-                    if(questionIndex == listQuestions.size) {
-                        val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz!!.idQuizz!!)
-                        db.newScore(score)
-
-                        val intent = Intent(this, ScoreActivity::class.java)
-                        intent.putExtra("KEY_QUIZZ_TITLE", currentQuizz!!.titleQuizz)
-                        intent.putExtra("KEY_SCORE", score)
-                        startActivityForResult(intent, 1)
-                    } else {
-                        (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
-
-                        selectedAnswers = ArrayList()
-                        updateDisplay()
-                        (recyclerAnswers.adapter as AnswerAdapter).notifyDataSetChanged()
-
-                        setNextBtnListener()
-                    }
+                    endOrContinueQuizz()
                 }
             }
+        }
+    }
+
+    fun endOrContinueQuizz() {
+        questionIndex++
+
+        if(questionIndex == listQuestions.size) {
+            val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz!!.idQuizz!!)
+            db.newScore(score)
+
+            val intent = Intent(this, ScoreActivity::class.java)
+            intent.putExtra("KEY_QUIZZ_TO_SCORE", currentQuizz!!)
+            intent.putExtra("KEY_SCORE", score)
+            startActivityForResult(intent, 1)
+        } else {
+            (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = false
+
+            selectedAnswers = ArrayList()
+            updateDisplay()
+            (recyclerAnswers.adapter as AnswerAdapter).notifyDataSetChanged()
+
+            setNextBtnListener()
         }
     }
 

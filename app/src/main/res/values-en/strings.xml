@@ -21,8 +21,10 @@
     <string name="alert_dialog_msg_noselect">Pick at least one answer..</string>
     <string name="action_validate">Check</string>
     <string name="action_next">Next</string>
+    <string name="action_skip">Skip</string>
     <string name="score_text">Score :</string>
     <string name="action_back">Back to menu</string>
+    <string name="action_replay">Restart</string>
     <string name="action_french">French</string>
     <string name="action_english">English</string>
     <string name="highscores">Best scores</string>

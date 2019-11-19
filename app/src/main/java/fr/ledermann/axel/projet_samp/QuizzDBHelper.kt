@@ -26,6 +26,40 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         db.execSQL(DATABASE_CREATE_SCORE)
     }
 
+    fun getValidQuizzs(): ArrayList<Quizz> {
+        val getQuizzs = getQuizzs()
+        val quizzList = ArrayList<Quizz>()
+
+        for(quizz in getQuizzs) {
+            val questionList = getValidQuestions(quizz.idQuizz!!)
+            if(questionList.isNotEmpty()) quizzList.add(quizz)
+        }
+
+        return quizzList
+    }
+
+    fun getValidQuestions(idQuizz: Long): ArrayList<Question> {
+        val getQuestions = getQuestions(idQuizz)
+        val questionList = ArrayList<Question>()
+
+        for(question in getQuestions) {
+            val answerList = getAnswers(question.idQuestion!!)
+
+            if(answerList.isEmpty()) continue
+
+            var isValid = false
+            for(answer in answerList) {
+                if(answer.isOk) {
+                    isValid = true
+                    break
+                }
+            }
+            if(isValid) questionList.add(question)
+        }
+
+        return questionList
+    }
+
     fun getQuizzs(): ArrayList<Quizz> {
         val quizzList = ArrayList<Quizz>()
         val selectQuizzQuery = "SELECT  * FROM ${QuizzDBTable.NAME}"
@@ -85,10 +119,10 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
     fun getScores(highscores : Boolean, idQuizz: Long): ArrayList<Score> {
         val scoreList = ArrayList<Score>()
-        var selectScoreQuery = "SELECT  * FROM ${ScoreDBTable.NAME} WHERE ${ScoreDBTable.ID_QUIZZ} = ?"
-        if(highscores) selectScoreQuery += " LIMIT 10 ORDER BY ${ScoreDBTable.GOOD_ANSWERS} DESC"
+        var limit = ""
+        if(highscores) limit = "10"
         val db = this.readableDatabase
-        val cScore = db.rawQuery(selectScoreQuery, arrayOf(idQuizz.toString()))
+        val cScore = db.query(ScoreDBTable.NAME, null, "${ScoreDBTable.ID_QUIZZ} = ?", arrayOf(idQuizz.toString()), null, null, "${ScoreDBTable.GOOD_ANSWERS} DESC", limit)
 
         if (cScore.moveToFirst()) {
             do {

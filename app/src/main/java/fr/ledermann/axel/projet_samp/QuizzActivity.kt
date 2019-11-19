@@ -21,16 +21,13 @@ class QuizzActivity : AppCompatActivity() {
         recyclerPlayQuizz.layoutManager = LinearLayoutManager(this)
         recyclerPlayQuizz.adapter = QuizzAdapter(this, quizzList)
 
-        val getQuizz = db.getQuizzs()
+        val getQuizz = db.getValidQuizzs()
         if(getQuizz.isEmpty()) {
 
         } else {
-            for(q in getQuizz) {
-                val getQuestions = db.getQuestions(q.idQuizz!!)
-                if(getQuestions.isNotEmpty()) quizzList.add(q)
-            }
+            quizzList.addAll(getQuizz)
+            recyclerPlayQuizz.adapter?.notifyItemInserted(recyclerPlayQuizz.adapter!!.itemCount)
         }
-        recyclerPlayQuizz.adapter?.notifyItemInserted(recyclerPlayQuizz.adapter!!.itemCount)
     }
 
     override fun onDestroy() {

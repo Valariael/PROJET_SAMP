@@ -30,7 +30,7 @@ class QuestionManageActivity : AppCompatActivity() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         currentQuizz = intent.getSerializableExtra("KEY_QUIZZ") as Quizz?
-        listQuestions = db.getQuestions(currentQuizz!!.idQuizz!!)
+        listQuestions = db.getValidQuestions(currentQuizz!!.idQuizz!!)
 
         manageQuestionQuizzTitle.text = currentQuizz!!.titleQuizz
         recyclerManageQuestion.layoutManager = LinearLayoutManager(this)

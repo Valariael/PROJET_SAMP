@@ -18,7 +18,7 @@ class HighscoreActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var listScores : ArrayList<Score> = ArrayList()
     private var listQuizz : ArrayList<Quizz> = ArrayList()
-    private var allScores = false
+    private var isHighscores = true
     private var idCurrentQuizz : Long? = null
     var db: QuizzDBHelper = QuizzDBHelper(this)
 
@@ -32,10 +32,10 @@ class HighscoreActivity : AppCompatActivity() {
         listScores.clear()
         if(idCurrentQuizz == null && listQuizz.isNotEmpty()) {
             idCurrentQuizz = listQuizz[0].idQuizz!!
-            listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
+            listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
         }
         else if(idCurrentQuizz == null) //TODO empty msg
-        else listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
+        else listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,9 +49,9 @@ class HighscoreActivity : AppCompatActivity() {
         recyclerScores.adapter = ScoreAdapter(this, listScores)
 
         switchHighscores.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
-            allScores = b
+            isHighscores = !b
             listScores.clear()
-            listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
+            listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
             recyclerScores.adapter?.notifyDataSetChanged()
         }
 
@@ -69,7 +69,7 @@ class HighscoreActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 idCurrentQuizz = listQuizz[position].idQuizz
                 listScores.clear()
-                listScores.addAll(db.getScores(allScores, idCurrentQuizz!!))
+                listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
                 recyclerScores.adapter?.notifyDataSetChanged()
             }
         }
@@ -80,13 +80,13 @@ class HighscoreActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putLong("SAVE_QUIZZ_INDEX", this.idCurrentQuizz!!)
-        outState.putBoolean("SAVE_ALL_SCORES", allScores)
+        outState.putBoolean("SAVE_ALL_SCORES", isHighscores)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         idCurrentQuizz = savedInstanceState.getLong("SAVE_QUIZZ_INDEX")
-        allScores = savedInstanceState.getBoolean("SAVE_ALL_SCORES")
+        isHighscores = savedInstanceState.getBoolean("SAVE_ALL_SCORES")
         db = QuizzDBHelper(this)
         getData()
         updateList()
