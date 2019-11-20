@@ -9,8 +9,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_settings.*
 import android.net.Uri
 
-const val SELECTED_LANGUAGE = "language"
-
 class SettingsActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var languageChanged = false

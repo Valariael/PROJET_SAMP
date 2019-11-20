@@ -3,7 +3,7 @@ package fr.ledermann.axel.projet_samp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -12,9 +12,13 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_play.*
+import android.graphics.drawable.DrawableContainer.DrawableContainerState
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.StateListDrawable
+
+
 
 class PlayActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -100,10 +104,10 @@ class PlayActivity : AppCompatActivity() {
 
     fun toggleAnswer(b : Button, index : Int) {
         if(selectedAnswers.contains(index)) {
-            b.background = resources.getDrawable(R.drawable.button_background)
+            Utils.changeGradientBtnColor(b, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
             selectedAnswers.remove(index)
         } else {
-            b.background = resources.getDrawable(R.drawable.button_background_select)
+            Utils.changeGradientBtnColor(b, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
             selectedAnswers.add(index)
         }
     }
@@ -111,7 +115,7 @@ class PlayActivity : AppCompatActivity() {
     private fun setNextBtnListener() {
         btnSkip.isEnabled = true
         btnSkip.isClickable = true
-        btnSkip.setBackgroundResource(R.drawable.button_background)
+        Utils.changeGradientBtnColor(btnSkip, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
 
         btnNext.text = getString(R.string.action_validate)
         btnNext.setOnClickListener {
@@ -144,7 +148,7 @@ class PlayActivity : AppCompatActivity() {
 
                 btnSkip.isEnabled = false
                 btnSkip.isClickable = false
-                btnSkip.setBackgroundResource(R.drawable.button_background_disabled)
+                Utils.changeGradientBtnColor(btnSkip, DISABLED_BTN_COLOR_START, DISABLED_BTN_COLOR_END)
 
                 btnNext.text = getString(R.string.action_next)
                 btnNext.setOnClickListener {
