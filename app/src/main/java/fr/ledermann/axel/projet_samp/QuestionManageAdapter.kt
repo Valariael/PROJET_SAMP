@@ -35,7 +35,7 @@ class QuestionManageAdapter (var quma : QuestionManageActivity, var questionList
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                quma.db.updateQuestion(questionList[position], quma.currentQuizz!!.idQuizz!!)
+                quma.db.updateQuestion(questionList[position], quma.currentQuizz.idQuizz!!)
             }
         })
 

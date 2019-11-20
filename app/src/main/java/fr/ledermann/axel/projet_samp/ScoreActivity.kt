@@ -12,12 +12,12 @@ import kotlinx.android.synthetic.main.activity_score.*
 
 class ScoreActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-    private var currentScore : Score? = null
-    private var quizz : Quizz? = null
+    private lateinit var currentScore : Score
+    private lateinit var quizz : Quizz
 
-    fun displayScore() {
-        scoreQuizzTitleText.text = quizz!!.titleQuizz
-        scoreText.text = "${currentScore!!.goodAnswers} / ${currentScore!!.totalAnswers}"
+    private fun displayScore() {
+        scoreQuizzTitleText.text = quizz.titleQuizz
+        scoreText.text = "${currentScore.goodAnswers} / ${currentScore.totalAnswers}"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +25,8 @@ class ScoreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_score)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        currentScore = intent.getSerializableExtra("KEY_SCORE") as Score?
-        quizz = intent.getSerializableExtra("KEY_QUIZZ_TO_SCORE") as Quizz?
+        currentScore = intent.getSerializableExtra("KEY_SCORE") as Score
+        quizz = intent.getSerializableExtra("KEY_QUIZZ_TO_SCORE") as Quizz
 
         displayScore()
 
@@ -52,8 +52,8 @@ class ScoreActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentScore = savedInstanceState.getSerializable("SAVE_SCORE") as Score?
-        quizz = savedInstanceState.getSerializable("SAVE_QUIZZ_TO_SCORE") as Quizz?
+        currentScore = savedInstanceState.getSerializable("SAVE_SCORE") as Score
+        quizz = savedInstanceState.getSerializable("SAVE_QUIZZ_TO_SCORE") as Quizz
 
         displayScore()
     }

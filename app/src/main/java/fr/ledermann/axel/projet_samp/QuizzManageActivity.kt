@@ -89,21 +89,21 @@ class QuizzManageActivity : AppCompatActivity() {
         super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 
-    fun addQuizz(q : Quizz) {
+    private fun addQuizz(q : Quizz) {
         q.idQuizz = db.newQuizz(q)
         quizzList.add(q)
 
         updateList()
     }
 
-    fun removeQuizz(pos : Int) {
+    private fun removeQuizz(pos : Int) {
         db.deleteQuizz(quizzList[pos])
         quizzList.removeAt(pos)
 
         if(recyclerManageQuizz.adapter!!.hasObservers()) recyclerManageQuizz.adapter!!.notifyItemRemoved(pos)
     }
 
-    fun moveQuizz(source : Int, target : Int) {
+    private fun moveQuizz(source : Int, target : Int) {
         val s = Quizz(quizzList[source].titleQuizz, quizzList[source].idQuizz!!)
 
         quizzList[source].titleQuizz = quizzList[target].titleQuizz

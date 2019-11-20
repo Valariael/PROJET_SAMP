@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_manage_answer.*
 
 class AnswerManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-    var currentQuestion : Question? = null
+    lateinit var currentQuestion : Question
     private var listAnswers : ArrayList<Answer> = ArrayList()
     var db: QuizzDBHelper = QuizzDBHelper(this)
 
@@ -29,10 +29,10 @@ class AnswerManageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_manage_answer)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        currentQuestion = intent.getSerializableExtra("KEY_QUESTION") as Question?
-        listAnswers = db.getAnswers(currentQuestion!!.idQuestion!!)
+        currentQuestion = intent.getSerializableExtra("KEY_QUESTION") as Question
+        listAnswers = db.getAnswers(currentQuestion.idQuestion!!)
 
-        manageAnswerQuestionTitle.text = currentQuestion!!.textQuestion
+        manageAnswerQuestionTitle.text = currentQuestion.textQuestion
         recyclerManageAnswer.layoutManager = LinearLayoutManager(this)
         recyclerManageAnswer.adapter = AnswerManageAdapter(this, listAnswers)
 
@@ -46,7 +46,7 @@ class AnswerManageActivity : AppCompatActivity() {
             editText.hint = getString(R.string.alert_dialog_hint_answer)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addAnswer(Answer(editText.text.toString(), false, currentQuestion!!.idQuestion!!))
+                addAnswer(Answer(editText.text.toString(), false, currentQuestion.idQuestion!!))
                 updateList()
             }
             builder.show()
@@ -77,9 +77,9 @@ class AnswerManageActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentQuestion = savedInstanceState.getSerializable("SAVE_QUESTION") as Question?
+        currentQuestion = savedInstanceState.getSerializable("SAVE_QUESTION") as Question
         db = QuizzDBHelper(this)
-        listAnswers = db.getAnswers(currentQuestion!!.idQuestion!!)
+        listAnswers = db.getAnswers(currentQuestion.idQuestion!!)
         updateList()
     }
 
@@ -94,33 +94,33 @@ class AnswerManageActivity : AppCompatActivity() {
         super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 
-    fun addAnswer(a : Answer) {
+    private fun addAnswer(a : Answer) {
         a.idAnswer = db.newAnswer(a)
         listAnswers.add(a)
 
         updateList()
     }
 
-    fun removeAnswer(pos : Int) {
+    private fun removeAnswer(pos : Int) {
         db.deleteAnswer(listAnswers[pos])
         listAnswers.removeAt(pos)
 
         if(recyclerManageAnswer.adapter!!.hasObservers()) recyclerManageAnswer.adapter!!.notifyItemRemoved(pos)
     }
 
-    fun moveAnswer(source : Int, target : Int) {
+    private fun moveAnswer(source : Int, target : Int) {
         val a = Answer(listAnswers[source].answer, listAnswers[source].isOk, listAnswers[source].idQuestion!!, listAnswers[source].idAnswer!!)
 
         listAnswers[source].idQuestion = listAnswers[target].idQuestion
         listAnswers[source].isOk = listAnswers[target].isOk
         listAnswers[source].answer = listAnswers[target].answer
-        db.updateAnswer(listAnswers[source], currentQuestion!!.idQuestion!!)
+        db.updateAnswer(listAnswers[source], currentQuestion.idQuestion!!)
 
 
         listAnswers[target].idQuestion = a.idQuestion
         listAnswers[target].isOk = a.isOk
         listAnswers[target].answer = a.answer
-        db.updateAnswer(listAnswers[target], currentQuestion!!.idQuestion!!)
+        db.updateAnswer(listAnswers[target], currentQuestion.idQuestion!!)
 
         if(recyclerManageAnswer.adapter!!.hasObservers()) recyclerManageAnswer.adapter!!.notifyItemMoved(source, target)
     }

@@ -26,7 +26,7 @@ class PlayActivity : AppCompatActivity() {
     private var doneQuestionsCount = 0
     private var correctAnswerCount = 0
     private var selectedAnswers : ArrayList<Int> = ArrayList()
-    private var currentQuizz : Quizz? = null
+    private lateinit var currentQuizz : Quizz
     private var currentAnswers : ArrayList<Answer> = ArrayList()
     private var listAllAnswers : ArrayList<ArrayList<Answer>> = ArrayList()
     private var listQuestions : ArrayList<Question> = ArrayList()
@@ -39,12 +39,12 @@ class PlayActivity : AppCompatActivity() {
     private fun updateDisplay() {
         currentAnswers.clear()
         currentAnswers.addAll(listAllAnswers[questionIndex])
-        titleQuizzText.text = currentQuizz!!.titleQuizz
+        titleQuizzText.text = currentQuizz.titleQuizz
         textQuestion.text = listQuestions[questionIndex].textQuestion
     }
 
     private fun getData() {
-        listQuestions = db.getQuestions(currentQuizz!!.idQuizz!!)
+        listQuestions = db.getQuestions(currentQuizz.idQuizz!!)
         for(q in listQuestions) {
             listAllAnswers.add(db.getAnswers(q.idQuestion!!))
         }
@@ -55,7 +55,7 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        currentQuizz = intent.getSerializableExtra("KEY_QUIZZ_PLAY") as Quizz?
+        currentQuizz = intent.getSerializableExtra("KEY_QUIZZ_PLAY") as Quizz
         getData()
         updateDisplay()
 
@@ -81,7 +81,7 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentQuizz = savedInstanceState.getSerializable("SAVE_QUIZZ_PLAY") as Quizz?
+        currentQuizz = savedInstanceState.getSerializable("SAVE_QUIZZ_PLAY") as Quizz
         questionIndex = savedInstanceState.getInt("SAVE_QUESTION_INDEX")
         doneQuestionsCount = savedInstanceState.getInt("SAVE_DONE_QUESTION_COUNT")
         correctAnswerCount = savedInstanceState.getInt("SAVE_CORRECT_ANSWER_COUNT")
@@ -160,15 +160,15 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    fun endOrContinueQuizz() {
+    private fun endOrContinueQuizz() {
         questionIndex++
 
         if(questionIndex == listQuestions.size) {
-            val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz!!.idQuizz!!)
+            val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz.idQuizz!!)
             db.newScore(score)
 
             val intent = Intent(this, ScoreActivity::class.java)
-            intent.putExtra("KEY_QUIZZ_TO_SCORE", currentQuizz!!)
+            intent.putExtra("KEY_QUIZZ_TO_SCORE", currentQuizz)
             intent.putExtra("KEY_SCORE", score)
             startActivityForResult(intent, 1)
         } else {

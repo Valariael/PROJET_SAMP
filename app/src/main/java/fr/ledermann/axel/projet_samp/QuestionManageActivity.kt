@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_manage_question.*
 
 class QuestionManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-    var currentQuizz : Quizz? = null
+    lateinit var currentQuizz : Quizz
     var db : QuizzDBHelper = QuizzDBHelper(this)
     private var listQuestions : ArrayList<Question> = ArrayList()
 
@@ -29,10 +29,10 @@ class QuestionManageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_manage_question)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        currentQuizz = intent.getSerializableExtra("KEY_QUIZZ") as Quizz?
-        listQuestions = db.getValidQuestions(currentQuizz!!.idQuizz!!)
+        currentQuizz = intent.getSerializableExtra("KEY_QUIZZ") as Quizz
+        listQuestions = db.getValidQuestions(currentQuizz.idQuizz!!)
 
-        manageQuestionQuizzTitle.text = currentQuizz!!.titleQuizz
+        manageQuestionQuizzTitle.text = currentQuizz.titleQuizz
         recyclerManageQuestion.layoutManager = LinearLayoutManager(this)
         recyclerManageQuestion.adapter = QuestionManageAdapter(this, listQuestions)
 
@@ -46,7 +46,7 @@ class QuestionManageActivity : AppCompatActivity() {
             editText.hint = getString(R.string.alert_dialog_title_answer)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addQuestion(Question(editText.text.toString(), currentQuizz!!.idQuizz!!))
+                addQuestion(Question(editText.text.toString(), currentQuizz.idQuizz!!))
                 updateList()
             }
             builder.show()
@@ -72,14 +72,14 @@ class QuestionManageActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
-        outState.putSerializable("SAVE_QUIZZ", currentQuizz!!)
+        outState.putSerializable("SAVE_QUIZZ", currentQuizz)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentQuizz = savedInstanceState.getSerializable("SAVE_QUIZZ") as Quizz?
+        currentQuizz = savedInstanceState.getSerializable("SAVE_QUIZZ") as Quizz
         db = QuizzDBHelper(this)
-        listQuestions = db.getQuestions(currentQuizz!!.idQuizz!!)
+        listQuestions = db.getQuestions(currentQuizz.idQuizz!!)
         updateList()
     }
 
@@ -94,31 +94,31 @@ class QuestionManageActivity : AppCompatActivity() {
         super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
     }
 
-    fun addQuestion(q : Question) {
+    private fun addQuestion(q : Question) {
         q.idQuestion = db.newQuestion(q)
         listQuestions.add(q)
 
         updateList()
     }
 
-    fun removeQuestion(pos : Int) {
+    private fun removeQuestion(pos : Int) {
         db.deleteQuestion(listQuestions[pos])
         listQuestions.removeAt(pos)
 
         if(recyclerManageQuestion.adapter!!.hasObservers()) recyclerManageQuestion.adapter!!.notifyItemRemoved(pos)
     }
 
-    fun moveQuestion(source : Int, target : Int) {
+    private fun moveQuestion(source : Int, target : Int) {
         val q = Question(listQuestions[source].textQuestion, listQuestions[source].idQuizz!!, listQuestions[source].idQuestion!!)
 
         listQuestions[source].idQuizz = listQuestions[target].idQuizz
         listQuestions[source].textQuestion = listQuestions[target].textQuestion
-        db.updateQuestion(listQuestions[source], currentQuizz!!.idQuizz!!)
+        db.updateQuestion(listQuestions[source], currentQuizz.idQuizz!!)
 
 
         listQuestions[target].idQuizz = q.idQuizz
         listQuestions[target].textQuestion = q.textQuestion
-        db.updateQuestion(listQuestions[target], currentQuizz!!.idQuizz!!)
+        db.updateQuestion(listQuestions[target], currentQuizz.idQuizz!!)
 
         if(recyclerManageQuestion.adapter!!.hasObservers()) recyclerManageQuestion.adapter!!.notifyItemMoved(source, target)
     }

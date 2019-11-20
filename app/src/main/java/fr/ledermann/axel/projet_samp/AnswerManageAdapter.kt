@@ -35,17 +35,17 @@ class AnswerManageAdapter (var ama : AnswerManageActivity, var answerList : Arra
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                ama.db.updateAnswer(answerList[position], ama.currentQuestion!!.idQuestion!!)
+                ama.db.updateAnswer(answerList[position], ama.currentQuestion.idQuestion!!)
             }
         })
 
         holder.switch.isChecked = answerList[position].isOk
         holder.switch.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             answerList[position].isOk = b
-            ama.db.updateAnswer(answerList[position], ama.currentQuestion!!.idQuestion!!)
+            ama.db.updateAnswer(answerList[position], ama.currentQuestion.idQuestion!!)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.switch.setShowText(true)
+            holder.switch.showText = true
         } else {
             holder.switch.text = ama.getString(R.string.switch_text)
         }
