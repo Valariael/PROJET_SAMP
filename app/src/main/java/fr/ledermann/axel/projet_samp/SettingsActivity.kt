@@ -8,6 +8,9 @@ import android.preference.PreferenceManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_settings.*
 import android.net.Uri
+import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
+
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -38,9 +41,16 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         resetBtn.setOnClickListener {
-            val db = QuizzDBHelper(this)
-            db.onUpgrade(db.writableDatabase, 1, 2)
-            Toast.makeText(this, getString(R.string.toast_reset), Toast.LENGTH_LONG).show()
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.action_reset))
+                .setMessage(getString(R.string.reset_text))
+                .setPositiveButton("OK") { _, _ ->
+                    val db = QuizzDBHelper(this)
+                    db.onUpgrade(db.writableDatabase, 1, 2)
+                    Toast.makeText(this, getString(R.string.toast_reset), Toast.LENGTH_LONG).show()
+                }
+                .setNegativeButton(getString(R.string.action_cancel), null)
+                .show()
         }
     }
 

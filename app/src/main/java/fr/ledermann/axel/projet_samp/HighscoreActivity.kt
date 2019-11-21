@@ -57,10 +57,10 @@ class HighscoreActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter<Quizz>(
             applicationContext,
-            android.R.layout.simple_spinner_dropdown_item,
+            R.layout.item_spinner_quizz,
             listQuizz
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.item_spinner_quizz)
 
         spinnerQuizz.adapter = adapter
         spinnerQuizz.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{

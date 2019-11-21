@@ -28,7 +28,8 @@ class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) 
                 pa.toggleAnswer(holder.button, position)
             }
         }
-        if(pa.isShowingAnswers) {
+
+        if(pa.showAnswers) {
             if(isDisplayingAnswers && answerList[position].isOk) Utils.changeGradientBtnColor(holder.button, CORRECT_BTN_COLOR_START, CORRECT_BTN_COLOR_END)
             else Utils.changeGradientBtnColor(holder.button, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
         }

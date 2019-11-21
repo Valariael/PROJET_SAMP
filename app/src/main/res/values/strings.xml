@@ -33,6 +33,8 @@
     <string name="all_highscores">Tous les scores</string>
     <string name="switch_highscores_text">Voir tout</string>
     <string name="scorequiz_text">Quiz :</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="reset_text">Êtes-vous sûr de vouloir réinitialiser vos quiz ?</string>
     <string name="advanced_text">Avancé</string>
     <string name="language_text">Langue</string>
     <string name="play_quizz_text">Choisis un quiz :</string>

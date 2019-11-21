@@ -3,20 +3,15 @@ package fr.ledermann.axel.projet_samp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_play.*
-import android.graphics.drawable.DrawableContainer.DrawableContainerState
-import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.StateListDrawable
 
 
 
@@ -30,7 +25,7 @@ class PlayActivity : AppCompatActivity() {
     private var currentAnswers : ArrayList<Answer> = ArrayList()
     private var listAllAnswers : ArrayList<ArrayList<Answer>> = ArrayList()
     private var listQuestions : ArrayList<Question> = ArrayList()
-    var isShowingAnswers : Boolean = true
+    var showAnswers : Boolean = false
     var db: QuizzDBHelper = QuizzDBHelper(this)
 
     private fun updateList() {
@@ -55,7 +50,7 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        isShowingAnswers = sharedPreferences.getBoolean(IS_SHOWING_ANSWERS, true)
+        showAnswers = sharedPreferences.getBoolean(IS_SHOWING_ANSWERS, true)
 
         currentQuizz = intent.getSerializableExtra("KEY_QUIZZ_PLAY") as Quizz
         getData()
