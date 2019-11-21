@@ -27,6 +27,8 @@
     <string name="action_replay">Restart</string>
     <string name="action_french">French</string>
     <string name="action_english">English</string>
+    <string name="action_show_answers_true">Answers visible</string>
+    <string name="action_show_answers_false">Answers hidden</string>
     <string name="highscores">Best scores</string>
     <string name="all_highscores">All scores</string>
     <string name="switch_highscores_text">See all</string>
@@ -34,7 +36,7 @@
     <string name="advanced_text">Advanced</string>
     <string name="language_text">Language</string>
     <string name="play_quizz_text">Pick a quiz :</string>
-    <string name="manage_quizz_text">Edit your quizzes : </string>
+    <string name="manage_quizz_text">Edit your quizzes :</string>
     <string name="manage_question_text">Edit the question of :</string>
     <string name="manage_answer_text">Edit the answers of :</string>
     <string name="toast_reset">Quizz data reset.</string>

@@ -30,6 +30,7 @@ class PlayActivity : AppCompatActivity() {
     private var currentAnswers : ArrayList<Answer> = ArrayList()
     private var listAllAnswers : ArrayList<ArrayList<Answer>> = ArrayList()
     private var listQuestions : ArrayList<Question> = ArrayList()
+    var isShowingAnswers : Boolean = true
     var db: QuizzDBHelper = QuizzDBHelper(this)
 
     private fun updateList() {
@@ -54,6 +55,7 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        isShowingAnswers = sharedPreferences.getBoolean(IS_SHOWING_ANSWERS, true)
 
         currentQuizz = intent.getSerializableExtra("KEY_QUIZZ_PLAY") as Quizz
         getData()
@@ -123,7 +125,7 @@ class PlayActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.alert_dialog_title_noselect))
                 builder.setMessage(getString(R.string.alert_dialog_msg_noselect))
-                builder.setPositiveButton("OK", null) //TODO allow force validation ?
+                builder.setPositiveButton("OK", null)
                 builder.show()
             } else {
                 (recyclerAnswers.adapter as AnswerAdapter).isDisplayingAnswers = true

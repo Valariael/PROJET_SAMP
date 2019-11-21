@@ -24,6 +24,8 @@
     <string name="action_skip">Passer</string>
     <string name="action_french">Français</string>
     <string name="action_english">Anglais</string>
+    <string name="action_show_answers_true">Réponses visibles</string>
+    <string name="action_show_answers_false">Réponses cachées</string>
     <string name="score_text">Score :</string>
     <string name="action_back">Retour au menu</string>
     <string name="action_replay">Recommencer</string>

@@ -14,6 +14,7 @@ const val CORRECT_BTN_COLOR_START = 0xff29a329.toInt()
 const val CORRECT_BTN_COLOR_END = 0xff33cc33.toInt()
 
 const val SELECTED_LANGUAGE = "language"
+const val IS_SHOWING_ANSWERS = "is_showing_answers"
 
 class Utils {
     companion object {
