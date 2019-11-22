@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.model
 
 import android.provider.BaseColumns
 

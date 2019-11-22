@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,13 +12,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Answer
+import fr.ledermann.axel.projet_samp.model.Question
+import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_manage_answer.*
 
 class AnswerManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     lateinit var currentQuestion : Question
     private var listAnswers : ArrayList<Answer> = ArrayList()
-    var db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper =
+        QuizzDBHelper(this)
 
     private fun updateList() {
         recyclerManageAnswer.adapter?.notifyItemInserted(recyclerManageAnswer.adapter!!.itemCount)
@@ -34,7 +40,8 @@ class AnswerManageActivity : AppCompatActivity() {
 
         manageAnswerQuestionTitle.text = currentQuestion.textQuestion
         recyclerManageAnswer.layoutManager = LinearLayoutManager(this)
-        recyclerManageAnswer.adapter = AnswerManageAdapter(this, listAnswers)
+        recyclerManageAnswer.adapter =
+            AnswerManageAdapter(this, listAnswers)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 
@@ -46,7 +53,13 @@ class AnswerManageActivity : AppCompatActivity() {
             editText.hint = getString(R.string.alert_dialog_hint_answer)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addAnswer(Answer(editText.text.toString(), false, currentQuestion.idQuestion!!))
+                addAnswer(
+                    Answer(
+                        editText.text.toString(),
+                        false,
+                        currentQuestion.idQuestion!!
+                    )
+                )
                 updateList()
             }
             builder.show()
@@ -91,7 +104,12 @@ class AnswerManageActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 
     private fun addAnswer(a : Answer) {
@@ -109,7 +127,12 @@ class AnswerManageActivity : AppCompatActivity() {
     }
 
     private fun moveAnswer(source : Int, target : Int) {
-        val a = Answer(listAnswers[source].answer, listAnswers[source].isOk, listAnswers[source].idQuestion!!, listAnswers[source].idAnswer!!)
+        val a = Answer(
+            listAnswers[source].answer,
+            listAnswers[source].isOk,
+            listAnswers[source].idQuestion!!,
+            listAnswers[source].idAnswer!!
+        )
 
         listAnswers[source].idQuestion = listAnswers[target].idQuestion
         listAnswers[source].isOk = listAnswers[target].isOk

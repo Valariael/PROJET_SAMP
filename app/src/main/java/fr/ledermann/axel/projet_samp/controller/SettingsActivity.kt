@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,8 +8,9 @@ import android.preference.PreferenceManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_settings.*
 import android.net.Uri
-import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.*
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -27,10 +28,16 @@ class SettingsActivity : AppCompatActivity() {
 
         setLanguageButtonsState()
         if(!isShowingAnswers) {
-            Utils.changeGradientBtnColor(showAnswersBtn, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(showAnswersBtn,
+                SELECTED_BTN_COLOR_START,
+                SELECTED_BTN_COLOR_END
+            )
             showAnswersBtn.text = getString(R.string.action_show_answers_false)
         } else {
-            Utils.changeGradientBtnColor(showAnswersBtn, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(showAnswersBtn,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
             showAnswersBtn.text = getString(R.string.action_show_answers_true)
         }
 
@@ -57,7 +64,12 @@ class SettingsActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 
     private fun changeApplicationLanguage(language:String){
@@ -91,23 +103,41 @@ class SettingsActivity : AppCompatActivity() {
     private fun setLanguageButtonsState() {
         if(isFrench) {
             attachEnglishListener()
-            Utils.changeGradientBtnColor(frenchBtn, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
-            Utils.changeGradientBtnColor(englishBtn, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(frenchBtn,
+                SELECTED_BTN_COLOR_START,
+                SELECTED_BTN_COLOR_END
+            )
+            Utils.changeGradientBtnColor(englishBtn,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
         } else {
             attachFrenchListener()
-            Utils.changeGradientBtnColor(englishBtn, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
-            Utils.changeGradientBtnColor(frenchBtn, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(englishBtn,
+                SELECTED_BTN_COLOR_START,
+                SELECTED_BTN_COLOR_END
+            )
+            Utils.changeGradientBtnColor(frenchBtn,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
         }
     }
 
     private fun toggleIsShowingAnswersButton() {
         if(isShowingAnswers) {
             isShowingAnswers = false
-            Utils.changeGradientBtnColor(showAnswersBtn, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(showAnswersBtn,
+                SELECTED_BTN_COLOR_START,
+                SELECTED_BTN_COLOR_END
+            )
             showAnswersBtn.text = getString(R.string.action_show_answers_false)
         } else {
             isShowingAnswers = true
-            Utils.changeGradientBtnColor(showAnswersBtn, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(showAnswersBtn,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
             showAnswersBtn.text = getString(R.string.action_show_answers_true)
         }
         val sharedPreferencesEditor = sharedPreferences.edit()

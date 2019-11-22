@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Quizz
+import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_quizz.*
 
 class QuizzActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var quizzList: ArrayList<Quizz> = ArrayList()
-    var db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper =
+        QuizzDBHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +24,8 @@ class QuizzActivity : AppCompatActivity() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         recyclerPlayQuizz.layoutManager = LinearLayoutManager(this)
-        recyclerPlayQuizz.adapter = QuizzAdapter(this, quizzList)
+        recyclerPlayQuizz.adapter =
+            QuizzAdapter(this, quizzList)
 
         val getQuizz = db.getValidQuizzs()
         if(getQuizz.isEmpty()) {
@@ -38,6 +44,11 @@ class QuizzActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 }

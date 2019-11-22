@@ -1,7 +1,6 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Intent
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -11,6 +10,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Quizz
 
 class QuizzManageAdapter (var qma : QuizzManageActivity, var quizzList : ArrayList<Quizz>) : RecyclerView.Adapter<QuizzManageAdapter.ViewHolder>() {
 

@@ -1,10 +1,12 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.*
 
 class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
     var isDisplayingAnswers = false
@@ -30,8 +32,14 @@ class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) 
         }
 
         if(pa.showAnswers) {
-            if(isDisplayingAnswers && answerList[position].isOk) Utils.changeGradientBtnColor(holder.button, CORRECT_BTN_COLOR_START, CORRECT_BTN_COLOR_END)
-            else Utils.changeGradientBtnColor(holder.button, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            if(isDisplayingAnswers && answerList[position].isOk) Utils.changeGradientBtnColor(holder.button,
+                CORRECT_BTN_COLOR_START,
+                CORRECT_BTN_COLOR_END
+            )
+            else Utils.changeGradientBtnColor(holder.button,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
         }
     }
 

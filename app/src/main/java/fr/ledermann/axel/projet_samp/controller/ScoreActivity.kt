@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,10 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Quizz
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
+import fr.ledermann.axel.projet_samp.model.Score
 import kotlinx.android.synthetic.main.activity_score.*
 
 class ScoreActivity : AppCompatActivity() {
@@ -61,6 +65,11 @@ class ScoreActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 }

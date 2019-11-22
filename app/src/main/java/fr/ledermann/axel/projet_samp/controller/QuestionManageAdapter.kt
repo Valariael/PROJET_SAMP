@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Intent
 import android.text.Editable
@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Question
 
 class QuestionManageAdapter (var quma : QuestionManageActivity, var questionList : ArrayList<Question>) : RecyclerView.Adapter<QuestionManageAdapter.ViewHolder>() {
 

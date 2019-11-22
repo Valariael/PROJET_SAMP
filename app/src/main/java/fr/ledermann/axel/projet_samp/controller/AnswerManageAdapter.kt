@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.os.Build
 import android.text.Editable
@@ -10,6 +10,8 @@ import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Answer
 
 class AnswerManageAdapter (var ama : AnswerManageActivity, var answerList : ArrayList<Answer>) : RecyclerView.Adapter<AnswerManageAdapter.ViewHolder>() {
 

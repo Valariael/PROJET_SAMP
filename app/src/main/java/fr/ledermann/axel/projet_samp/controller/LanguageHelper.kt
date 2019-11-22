@@ -1,12 +1,15 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import androidx.appcompat.view.ContextThemeWrapper
+import fr.ledermann.axel.projet_samp.R
 import java.util.*
 
-class LanguageHelper(base: Context) : ContextThemeWrapper(base, R.style.AppTheme) {
+class LanguageHelper(base: Context) : ContextThemeWrapper(base,
+    R.style.AppTheme
+) {
 
     companion object {
         fun wrap(context: Context, language: String): ContextThemeWrapper {
@@ -18,7 +21,10 @@ class LanguageHelper(base: Context) : ContextThemeWrapper(base, R.style.AppTheme
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     config.setLocale(locale)
                 } else {
-                    setSystemLocaleLegacy(config, locale)
+                    setSystemLocaleLegacy(
+                        config,
+                        locale
+                    )
                 }
                 config.setLayoutDirection(locale)
                 newContext = context.createConfigurationContext(config)

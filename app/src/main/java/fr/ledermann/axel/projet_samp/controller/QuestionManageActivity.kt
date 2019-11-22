@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,12 +12,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Question
+import fr.ledermann.axel.projet_samp.model.Quizz
+import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_manage_question.*
 
 class QuestionManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     lateinit var currentQuizz : Quizz
-    var db : QuizzDBHelper = QuizzDBHelper(this)
+    var db : QuizzDBHelper =
+        QuizzDBHelper(this)
     private var listQuestions : ArrayList<Question> = ArrayList()
 
     private fun updateList() {
@@ -34,7 +40,8 @@ class QuestionManageActivity : AppCompatActivity() {
 
         manageQuestionQuizzTitle.text = currentQuizz.titleQuizz
         recyclerManageQuestion.layoutManager = LinearLayoutManager(this)
-        recyclerManageQuestion.adapter = QuestionManageAdapter(this, listQuestions)
+        recyclerManageQuestion.adapter =
+            QuestionManageAdapter(this, listQuestions)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 
@@ -46,7 +53,12 @@ class QuestionManageActivity : AppCompatActivity() {
             editText.hint = getString(R.string.alert_dialog_title_answer)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
-                addQuestion(Question(editText.text.toString(), currentQuizz.idQuizz!!))
+                addQuestion(
+                    Question(
+                        editText.text.toString(),
+                        currentQuizz.idQuizz!!
+                    )
+                )
                 updateList()
             }
             builder.show()
@@ -91,7 +103,12 @@ class QuestionManageActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 
     private fun addQuestion(q : Question) {
@@ -109,7 +126,11 @@ class QuestionManageActivity : AppCompatActivity() {
     }
 
     private fun moveQuestion(source : Int, target : Int) {
-        val q = Question(listQuestions[source].textQuestion, listQuestions[source].idQuizz!!, listQuestions[source].idQuestion!!)
+        val q = Question(
+            listQuestions[source].textQuestion,
+            listQuestions[source].idQuizz!!,
+            listQuestions[source].idQuestion!!
+        )
 
         listQuestions[source].idQuizz = listQuestions[target].idQuizz
         listQuestions[source].textQuestion = listQuestions[target].textQuestion

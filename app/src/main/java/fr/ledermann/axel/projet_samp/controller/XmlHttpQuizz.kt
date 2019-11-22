@@ -1,7 +1,9 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.os.AsyncTask
-import kotlinx.android.synthetic.main.activity_manage_quizz.*
+import fr.ledermann.axel.projet_samp.model.Answer
+import fr.ledermann.axel.projet_samp.model.Question
+import fr.ledermann.axel.projet_samp.model.Quizz
 import org.w3c.dom.Element
 import java.io.BufferedReader
 import java.io.IOException
@@ -42,7 +44,11 @@ class XmlHttpQuizz (var qma : QuizzManageActivity){
                     while (i < quizzNodes.length) {
                         val quizzEl = quizzNodes.item(i) as Element
                         val quizzName = quizzEl.getAttribute("type")
-                        val idQuizz = qma.db.newQuizz(Quizz(quizzName))
+                        val idQuizz = qma.db.newQuizz(
+                            Quizz(
+                                quizzName
+                            )
+                        )
 
                         val questionNodes = quizzEl.getElementsByTagName("Question")
 
@@ -50,7 +56,12 @@ class XmlHttpQuizz (var qma : QuizzManageActivity){
                         while (j < questionNodes.length) {
                             val questionEl = questionNodes.item(j) as Element
                             val questionName = questionEl.childNodes.item(0).textContent.trim()
-                            val idQuestion = qma.db.newQuestion(Question(questionName, idQuizz))
+                            val idQuestion = qma.db.newQuestion(
+                                Question(
+                                    questionName,
+                                    idQuizz
+                                )
+                            )
 
                             val goodAnswerNode = questionEl.getElementsByTagName("Reponse").item(0) as Element
                             val goodAnswer = Integer.parseInt(goodAnswerNode.getAttribute("valeur"))-1
@@ -61,8 +72,20 @@ class XmlHttpQuizz (var qma : QuizzManageActivity){
                                 val answerEl = answerNodes.item(k) as Element
                                 val answerName = answerEl.childNodes.item(0).textContent.trim()
 
-                                if(k == goodAnswer) qma.db.newAnswer(Answer(answerName, true, idQuestion))
-                                else qma.db.newAnswer(Answer(answerName, false, idQuestion))
+                                if(k == goodAnswer) qma.db.newAnswer(
+                                    Answer(
+                                        answerName,
+                                        true,
+                                        idQuestion
+                                    )
+                                )
+                                else qma.db.newAnswer(
+                                    Answer(
+                                        answerName,
+                                        false,
+                                        idQuestion
+                                    )
+                                )
 
                                 k++
                             }

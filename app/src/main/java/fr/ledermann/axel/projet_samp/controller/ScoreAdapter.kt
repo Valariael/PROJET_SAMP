@@ -1,10 +1,12 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Score
 
 class ScoreAdapter (var ha : HighscoreActivity, var scoreList : ArrayList<Score>) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
     class ViewHolder (v : View) : RecyclerView.ViewHolder(v) {

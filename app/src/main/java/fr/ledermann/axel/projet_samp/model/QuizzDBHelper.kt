@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.model
 
 import android.content.ContentValues
 import android.content.Context
@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context,
+    DATABASE_NAME, null,
+    DATABASE_VERSION
+) {
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         if (db != null) {
             db.execSQL("DROP TABLE IF EXISTS " + QuizzDBTable.NAME)
@@ -68,7 +71,11 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         if (cQuizz.moveToFirst()) {
             do {
-                val quizz = Quizz(cQuizz.getString(cQuizz.getColumnIndex(QuizzDBTable.TITLE)))
+                val quizz = Quizz(
+                    cQuizz.getString(
+                        cQuizz.getColumnIndex(QuizzDBTable.TITLE)
+                    )
+                )
                 quizz.idQuizz = cQuizz.getLong(cQuizz.getColumnIndex(QuizzDBTable.ID))
                 quizzList.add(quizz)
             } while (cQuizz.moveToNext())
@@ -86,7 +93,11 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         if (cQuestion.moveToFirst()) {
             do {
-                val question = Question(cQuestion.getString(cQuestion.getColumnIndex(QuestionDBTable.TEXT)))
+                val question = Question(
+                    cQuestion.getString(
+                        cQuestion.getColumnIndex(QuestionDBTable.TEXT)
+                    )
+                )
                 question.idQuizz = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID_QUIZZ))
                 question.idQuestion = cQuestion.getLong(cQuestion.getColumnIndex(QuestionDBTable.ID))
                 questionList.add(question)
@@ -105,7 +116,11 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         if (cAnswer.moveToFirst()) {
             do {
-                val answer = Answer(cAnswer.getString(cAnswer.getColumnIndex(AnswerDBTable.TEXT)))
+                val answer = Answer(
+                    cAnswer.getString(
+                        cAnswer.getColumnIndex(AnswerDBTable.TEXT)
+                    )
+                )
                 answer.isOk = cAnswer.getInt(cAnswer.getColumnIndex(AnswerDBTable.IS_OK))>0
                 answer.idAnswer = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID))
                 answer.idQuestion = cAnswer.getLong(cAnswer.getColumnIndex(AnswerDBTable.ID_QUESTION))
@@ -126,11 +141,13 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
 
         if (cScore.moveToFirst()) {
             do {
-                val score = Score(cScore.getInt(cScore.getColumnIndex(ScoreDBTable.GOOD_ANSWERS)),
+                val score = Score(
+                    cScore.getInt(cScore.getColumnIndex(ScoreDBTable.GOOD_ANSWERS)),
                     cScore.getInt(cScore.getColumnIndex(ScoreDBTable.TOTAL_ANSWERS)),
                     cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID_QUIZZ)),
                     cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID)),
-                    cScore.getString(cScore.getColumnIndex(ScoreDBTable.DATE)))
+                    cScore.getString(cScore.getColumnIndex(ScoreDBTable.DATE))
+                )
                 score.idQuizz = cScore.getLong(cScore.getColumnIndex(ScoreDBTable.ID))
                 scoreList.add(score)
             } while (cScore.moveToNext())
@@ -144,12 +161,18 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context, DATABASE_
         val db = this.writableDatabase
         db.delete(QuizzDBTable.NAME, "${QuizzDBTable.ID} = ?", arrayOf(quizz.idQuizz.toString()))
 
-        val questions = db.query(QuestionDBTable.NAME, arrayOf(QuestionDBTable.ID), "${QuestionDBTable.ID_QUIZZ} = ?", arrayOf(quizz.idQuizz.toString()), null, null, null)
+        val questions = db.query(
+            QuestionDBTable.NAME, arrayOf(
+                QuestionDBTable.ID
+            ), "${QuestionDBTable.ID_QUIZZ} = ?", arrayOf(quizz.idQuizz.toString()), null, null, null)
         val deleted = db.delete(QuestionDBTable.NAME, "${QuestionDBTable.ID_QUIZZ} = ?", arrayOf(quizz.idQuizz.toString()))
         if(deleted > 0) {
             if (questions.moveToFirst()) {
                 do {
-                    db.delete(AnswerDBTable.NAME, "${AnswerDBTable.ID_QUESTION} = ?", arrayOf(questions.getString(questions.getColumnIndex(QuestionDBTable.ID))))
+                    db.delete(
+                        AnswerDBTable.NAME, "${AnswerDBTable.ID_QUESTION} = ?", arrayOf(questions.getString(questions.getColumnIndex(
+                            QuestionDBTable.ID
+                        ))))
                 } while (questions.moveToNext())
             }
             questions.close()

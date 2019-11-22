@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_manage_quizz.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
-
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Quizz
+import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 
 
 class QuizzManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     var quizzList: ArrayList<Quizz> = ArrayList()
-    var db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper =
+        QuizzDBHelper(this)
 
     fun updateList() {
         recyclerManageQuizz.adapter?.notifyItemInserted(recyclerManageQuizz.adapter!!.itemCount)
@@ -31,7 +35,8 @@ class QuizzManageActivity : AppCompatActivity() {
 
         recyclerManageQuizz.layoutManager = LinearLayoutManager(this)
         quizzList = db.getQuizzs()
-        recyclerManageQuizz.adapter = QuizzManageAdapter(this, quizzList)
+        recyclerManageQuizz.adapter =
+            QuizzManageAdapter(this, quizzList)
 
         val inflater: LayoutInflater = LayoutInflater.from(this)
 
@@ -86,7 +91,12 @@ class QuizzManageActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 
     private fun addQuizz(q : Quizz) {
@@ -104,7 +114,10 @@ class QuizzManageActivity : AppCompatActivity() {
     }
 
     private fun moveQuizz(source : Int, target : Int) {
-        val s = Quizz(quizzList[source].titleQuizz, quizzList[source].idQuizz!!)
+        val s = Quizz(
+            quizzList[source].titleQuizz,
+            quizzList[source].idQuizz!!
+        )
 
         quizzList[source].titleQuizz = quizzList[target].titleQuizz
         db.updateQuizz(quizzList[source])

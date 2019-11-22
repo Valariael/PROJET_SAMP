@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.*
 import kotlinx.android.synthetic.main.activity_play.*
 
 
@@ -26,7 +28,8 @@ class PlayActivity : AppCompatActivity() {
     private var listAllAnswers : ArrayList<ArrayList<Answer>> = ArrayList()
     private var listQuestions : ArrayList<Question> = ArrayList()
     var showAnswers : Boolean = false
-    var db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper =
+        QuizzDBHelper(this)
 
     private fun updateList() {
         recyclerAnswers.adapter?.notifyItemInserted(recyclerAnswers.adapter!!.itemCount)
@@ -57,7 +60,8 @@ class PlayActivity : AppCompatActivity() {
         updateDisplay()
 
         recyclerAnswers.layoutManager = LinearLayoutManager(this)
-        recyclerAnswers.adapter = AnswerAdapter(this, currentAnswers)
+        recyclerAnswers.adapter =
+            AnswerAdapter(this, currentAnswers)
 
         setNextBtnListener()
         btnSkip.setOnClickListener {
@@ -96,15 +100,26 @@ class PlayActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 
     fun toggleAnswer(b : Button, index : Int) {
         if(selectedAnswers.contains(index)) {
-            Utils.changeGradientBtnColor(b, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(b,
+                BASE_BTN_COLOR_START,
+                BASE_BTN_COLOR_END
+            )
             selectedAnswers.remove(index)
         } else {
-            Utils.changeGradientBtnColor(b, SELECTED_BTN_COLOR_START, SELECTED_BTN_COLOR_END)
+            Utils.changeGradientBtnColor(b,
+                SELECTED_BTN_COLOR_START,
+                SELECTED_BTN_COLOR_END
+            )
             selectedAnswers.add(index)
         }
     }
@@ -112,7 +127,10 @@ class PlayActivity : AppCompatActivity() {
     private fun setNextBtnListener() {
         btnSkip.isEnabled = true
         btnSkip.isClickable = true
-        Utils.changeGradientBtnColor(btnSkip, BASE_BTN_COLOR_START, BASE_BTN_COLOR_END)
+        Utils.changeGradientBtnColor(btnSkip,
+            BASE_BTN_COLOR_START,
+            BASE_BTN_COLOR_END
+        )
 
         btnNext.text = getString(R.string.action_validate)
         btnNext.setOnClickListener {
@@ -145,7 +163,10 @@ class PlayActivity : AppCompatActivity() {
 
                 btnSkip.isEnabled = false
                 btnSkip.isClickable = false
-                Utils.changeGradientBtnColor(btnSkip, DISABLED_BTN_COLOR_START, DISABLED_BTN_COLOR_END)
+                Utils.changeGradientBtnColor(btnSkip,
+                    DISABLED_BTN_COLOR_START,
+                    DISABLED_BTN_COLOR_END
+                )
 
                 btnNext.text = getString(R.string.action_next)
                 btnNext.setOnClickListener {
@@ -161,7 +182,11 @@ class PlayActivity : AppCompatActivity() {
         questionIndex++
 
         if(questionIndex == listQuestions.size) {
-            val score = Score(correctAnswerCount, doneQuestionsCount, currentQuizz.idQuizz!!)
+            val score = Score(
+                correctAnswerCount,
+                doneQuestionsCount,
+                currentQuizz.idQuizz!!
+            )
             db.newScore(score)
 
             val intent = Intent(this, ScoreActivity::class.java)

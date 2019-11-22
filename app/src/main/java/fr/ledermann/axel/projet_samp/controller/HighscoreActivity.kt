@@ -1,4 +1,4 @@
-package fr.ledermann.axel.projet_samp
+package fr.ledermann.axel.projet_samp.controller
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,6 +12,11 @@ import kotlinx.android.synthetic.main.activity_highscore.*
 import android.widget.ArrayAdapter
 import android.view.View
 import android.widget.AdapterView
+import fr.ledermann.axel.projet_samp.R
+import fr.ledermann.axel.projet_samp.model.Quizz
+import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
+import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
+import fr.ledermann.axel.projet_samp.model.Score
 
 
 class HighscoreActivity : AppCompatActivity() {
@@ -20,7 +25,8 @@ class HighscoreActivity : AppCompatActivity() {
     private var listQuizz : ArrayList<Quizz> = ArrayList()
     private var isHighscores = true
     private var idCurrentQuizz : Long? = null
-    var db: QuizzDBHelper = QuizzDBHelper(this)
+    var db: QuizzDBHelper =
+        QuizzDBHelper(this)
 
     private fun updateList() {
         recyclerScores.adapter?.notifyItemInserted(recyclerScores.adapter!!.itemCount)
@@ -46,7 +52,8 @@ class HighscoreActivity : AppCompatActivity() {
         getData()
 
         recyclerScores.layoutManager = LinearLayoutManager(this)
-        recyclerScores.adapter = ScoreAdapter(this, listScores)
+        recyclerScores.adapter =
+            ScoreAdapter(this, listScores)
 
         switchHighscores.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             isHighscores = !b
@@ -100,6 +107,11 @@ class HighscoreActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPreferences.getString(SELECTED_LANGUAGE, "fr")
-        super.attachBaseContext(LanguageHelper.wrap(newBase!!, lang!!))
+        super.attachBaseContext(
+            LanguageHelper.wrap(
+                newBase!!,
+                lang!!
+            )
+        )
     }
 }
