@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.*
 
+/*
+ * This class is a recycler view adapter used to display the possible answers
+ * when playing a quiz.
+ */
 class AnswerAdapter (var pa : PlayActivity, var answerList : ArrayList<Answer>) : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
     var isDisplayingAnswers = false
 

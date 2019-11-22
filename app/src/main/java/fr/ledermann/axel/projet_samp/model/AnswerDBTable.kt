@@ -2,6 +2,9 @@ package fr.ledermann.axel.projet_samp.model
 
 import android.provider.BaseColumns
 
+/*
+ * This class is the database model for the answer table.
+ */
 class AnswerDBTable : BaseColumns {
     companion object {
         const val NAME = "answer"

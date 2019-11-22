@@ -20,11 +20,13 @@ import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_manage_question.*
 
+/*
+ * This is the activity used to display and edit the questions of the previously selected quiz.
+ */
 class QuestionManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     lateinit var currentQuizz : Quizz
-    var db : QuizzDBHelper =
-        QuizzDBHelper(this)
+    var db : QuizzDBHelper = QuizzDBHelper(this)
     private var listQuestions : ArrayList<Question> = ArrayList()
 
     private fun updateList() {

@@ -14,6 +14,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
+/*
+ * This class executes an asynchronous task that gathers XML data
+ * and converts it to Quizz, Question and Answer objects.
+ * These entities are then saved in the database for further use.
+ */
 class XmlHttpQuizz (var qma : QuizzManageActivity){
     private var httpTask = HttpTask()
 

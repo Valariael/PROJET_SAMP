@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Answer
 
+/*
+ * This class is a recycler view adapter used to display the answers of a question
+ * during modification.
+ */
 class AnswerManageAdapter (var ama : AnswerManageActivity, var answerList : ArrayList<Answer>) : RecyclerView.Adapter<AnswerManageAdapter.ViewHolder>() {
 
     class ViewHolder (v : View) : RecyclerView.ViewHolder(v) {

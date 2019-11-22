@@ -2,6 +2,9 @@ package fr.ledermann.axel.projet_samp.model
 
 import java.io.Serializable
 
+/*
+ * This class is the model for an answer.
+ */
 data class Answer(var answer : String) : Serializable {
     var isOk : Boolean = false
     var idQuestion : Long? = null

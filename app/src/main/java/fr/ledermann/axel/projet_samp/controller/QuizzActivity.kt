@@ -13,6 +13,11 @@ import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_quizz.*
 
+/*
+ * This class is the activity used to display all the playable and valid quizzes as well as select
+ * the desired quiz to play.
+ * A quiz is valid if it has at least one "true" answer to a question.
+ */
 class QuizzActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var quizzList: ArrayList<Quizz> = ArrayList()

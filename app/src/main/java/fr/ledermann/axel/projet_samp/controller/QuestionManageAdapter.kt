@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Question
 
+/*
+ * This class is a recycler view adapter used to display the questions of a quiz
+ * during modification.
+ */
 class QuestionManageAdapter (var quma : QuestionManageActivity, var questionList : ArrayList<Question>) : RecyclerView.Adapter<QuestionManageAdapter.ViewHolder>() {
 
     class ViewHolder (v : View) : RecyclerView.ViewHolder(v) {

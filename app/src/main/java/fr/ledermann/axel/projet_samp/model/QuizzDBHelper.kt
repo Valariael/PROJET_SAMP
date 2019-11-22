@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/*
+ * This class is used to create and edit the database where all the persitent data is stored.
+ */
 class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context,
     DATABASE_NAME, null,
     DATABASE_VERSION

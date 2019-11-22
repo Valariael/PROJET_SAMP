@@ -18,7 +18,9 @@ import fr.ledermann.axel.projet_samp.model.Quizz
 import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 
-
+/*
+ * This is the activity used to display and edit the quizzes.
+ */
 class QuizzManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     var quizzList: ArrayList<Quizz> = ArrayList()

@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Score
 
+/*
+ * This class is a recycler view adapter used to display the top scores or all the scores
+ * in the "Best scores" section of the application.
+ */
 class ScoreAdapter (var ha : HighscoreActivity, var scoreList : ArrayList<Score>) : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
     class ViewHolder (v : View) : RecyclerView.ViewHolder(v) {
         var indexText : TextView = v.findViewById(R.id.highscoreIndexText)

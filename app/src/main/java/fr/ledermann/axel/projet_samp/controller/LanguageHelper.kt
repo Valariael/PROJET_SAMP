@@ -7,9 +7,11 @@ import androidx.appcompat.view.ContextThemeWrapper
 import fr.ledermann.axel.projet_samp.R
 import java.util.*
 
-class LanguageHelper(base: Context) : ContextThemeWrapper(base,
-    R.style.AppTheme
-) {
+/*
+ * This class is used to change the language of the application.
+ * This is achieved through the edition of the locale.
+ */
+class LanguageHelper(base: Context) : ContextThemeWrapper(base, R.style.AppTheme) {
 
     companion object {
         fun wrap(context: Context, language: String): ContextThemeWrapper {

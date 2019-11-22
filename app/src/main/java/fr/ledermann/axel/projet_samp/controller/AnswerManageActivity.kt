@@ -20,12 +20,14 @@ import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_manage_answer.*
 
+/*
+ * This is the activity used to display and edit the answers of the previously selected question.
+ */
 class AnswerManageActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     lateinit var currentQuestion : Question
     private var listAnswers : ArrayList<Answer> = ArrayList()
-    var db: QuizzDBHelper =
-        QuizzDBHelper(this)
+    var db: QuizzDBHelper = QuizzDBHelper(this)
 
     private fun updateList() {
         manageAnswerEmptyText.isVisible = listAnswers.isEmpty()

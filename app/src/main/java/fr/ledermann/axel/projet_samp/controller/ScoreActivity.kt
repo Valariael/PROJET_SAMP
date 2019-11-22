@@ -14,6 +14,9 @@ import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import fr.ledermann.axel.projet_samp.model.Score
 import kotlinx.android.synthetic.main.activity_score.*
 
+/*
+ * This class is the activity used to display the score at the end of a quiz.
+ */
 class ScoreActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var currentScore : Score

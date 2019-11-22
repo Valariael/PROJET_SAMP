@@ -2,6 +2,9 @@ package fr.ledermann.axel.projet_samp.model
 
 import android.provider.BaseColumns
 
+/*
+ * This class is the database model for the score table.
+ */
 class ScoreDBTable : BaseColumns {
     companion object {
         const val NAME = "score"

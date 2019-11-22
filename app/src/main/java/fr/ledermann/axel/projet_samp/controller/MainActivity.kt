@@ -11,9 +11,11 @@ import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import kotlinx.android.synthetic.main.activity_main.*
 
+/*
+ * This class is the activity used to display the main menu of the application.
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
-    private var started = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

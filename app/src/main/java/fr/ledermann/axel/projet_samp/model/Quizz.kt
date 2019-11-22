@@ -2,6 +2,9 @@ package fr.ledermann.axel.projet_samp.model
 
 import java.io.Serializable
 
+/*
+ * This class is the model for a quiz.
+ */
 data class Quizz(var titleQuizz : String) : Serializable{
     var idQuizz : Long? = null
 

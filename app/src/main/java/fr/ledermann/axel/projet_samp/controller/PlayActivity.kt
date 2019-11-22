@@ -15,8 +15,11 @@ import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.*
 import kotlinx.android.synthetic.main.activity_play.*
 
-
-
+/*
+ * This is the activity used to play a quiz. Every question is done in two steps,
+ * first select the answer(s) of your choice, then valid and see the real answer.
+ * When the end of the quiz is reached, the score is displayed in another activity.
+ */
 class PlayActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var questionIndex = 0

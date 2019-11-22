@@ -16,6 +16,9 @@ const val CORRECT_BTN_COLOR_END = 0xff33cc33.toInt()
 const val SELECTED_LANGUAGE = "language"
 const val IS_SHOWING_ANSWERS = "is_showing_answers"
 
+/*
+ * This class is a utility class used to store constants as well as functions used throughout the project.
+ */
 class Utils {
     companion object {
         fun changeGradientBtnColor(btn : Button, startColor : Int, endColor : Int) {

@@ -19,7 +19,10 @@ import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
 import fr.ledermann.axel.projet_samp.model.SELECTED_LANGUAGE
 import fr.ledermann.axel.projet_samp.model.Score
 
-
+/*
+ * This class is the activity used to display the top scores or all of them.
+ * For each one of them, there is a ranking, the score and the date.
+ */
 class HighscoreActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var listScores : ArrayList<Score> = ArrayList()

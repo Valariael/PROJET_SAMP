@@ -12,7 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.*
 
-
+/*
+ * This class is the activity used to display and edit the settings of the application like
+ * the language as well as reset the application.
+ */
 class SettingsActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private var languageChanged = false
