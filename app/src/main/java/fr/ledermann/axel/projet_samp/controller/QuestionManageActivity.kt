@@ -54,7 +54,7 @@ class QuestionManageActivity : AppCompatActivity() {
             builder.setTitle(getString(R.string.alert_dialog_title_question))
             val dialogLayout = inflater.inflate(R.layout.alert_dialog_gettext, null)
             val editText  = dialogLayout.findViewById<EditText>(R.id.textAlertDialog)
-            editText.hint = getString(R.string.alert_dialog_title_answer)
+            editText.hint = getString(R.string.alert_dialog_title_question)
             builder.setView(dialogLayout)
             builder.setPositiveButton("OK") { _, _ ->
                 addQuestion(
