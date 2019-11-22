@@ -177,7 +177,7 @@ class QuizzDBHelper(val context : Context) : SQLiteOpenHelper(context,
             }
             questions.close()
         }
-        //TODO : maybe delete scores or store title in score
+        db.delete(ScoreDBTable.NAME, "${ScoreDBTable.ID_QUIZZ} = ?", arrayOf(quizz.idQuizz.toString()))
     }
 
     fun deleteQuestion(question : Question) {

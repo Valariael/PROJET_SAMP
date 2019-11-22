@@ -44,4 +44,6 @@
     <string name="toast_reset">Quizz data reset.</string>
     <string name="toast_good">Correct, well played.</string>
     <string name="toast_bad">Wrong answer..</string>
+    <string name="empty_text">- Empty -</string>
+    <string name="http_error_text">An error occurred while downloading the quizzes..</string>
 </resources>

@@ -9,6 +9,7 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class QuestionManageActivity : AppCompatActivity() {
     private var listQuestions : ArrayList<Question> = ArrayList()
 
     private fun updateList() {
+        manageQuestionEmptyText.isVisible = listQuestions.isEmpty()
         recyclerManageQuestion.adapter?.notifyItemInserted(recyclerManageQuestion.adapter!!.itemCount)
     }
 
@@ -121,6 +123,7 @@ class QuestionManageActivity : AppCompatActivity() {
     private fun removeQuestion(pos : Int) {
         db.deleteQuestion(listQuestions[pos])
         listQuestions.removeAt(pos)
+        manageQuestionEmptyText.isVisible = listQuestions.isEmpty()
 
         if(recyclerManageQuestion.adapter!!.hasObservers()) recyclerManageQuestion.adapter!!.notifyItemRemoved(pos)
     }

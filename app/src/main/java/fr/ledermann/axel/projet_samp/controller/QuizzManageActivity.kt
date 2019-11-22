@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_manage_quizz.*
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class QuizzManageActivity : AppCompatActivity() {
         QuizzDBHelper(this)
 
     fun updateList() {
+        manageQuizzEmptyText.isVisible = quizzList.isEmpty()
         recyclerManageQuizz.adapter?.notifyItemInserted(recyclerManageQuizz.adapter!!.itemCount)
     }
 
@@ -109,6 +111,7 @@ class QuizzManageActivity : AppCompatActivity() {
     private fun removeQuizz(pos : Int) {
         db.deleteQuizz(quizzList[pos])
         quizzList.removeAt(pos)
+        manageQuizzEmptyText.isVisible = quizzList.isEmpty()
 
         if(recyclerManageQuizz.adapter!!.hasObservers()) recyclerManageQuizz.adapter!!.notifyItemRemoved(pos)
     }

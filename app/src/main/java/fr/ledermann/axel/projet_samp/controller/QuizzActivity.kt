@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Quizz
@@ -29,8 +30,9 @@ class QuizzActivity : AppCompatActivity() {
 
         val getQuizz = db.getValidQuizzs()
         if(getQuizz.isEmpty()) {
-
+            quizzEmptyText.isVisible = true
         } else {
+            quizzEmptyText.isVisible = false
             quizzList.addAll(getQuizz)
             recyclerPlayQuizz.adapter?.notifyItemInserted(recyclerPlayQuizz.adapter!!.itemCount)
         }

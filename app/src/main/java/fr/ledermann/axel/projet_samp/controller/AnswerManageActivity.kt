@@ -9,6 +9,7 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class AnswerManageActivity : AppCompatActivity() {
         QuizzDBHelper(this)
 
     private fun updateList() {
+        manageAnswerEmptyText.isVisible = listAnswers.isEmpty()
         recyclerManageAnswer.adapter?.notifyItemInserted(recyclerManageAnswer.adapter!!.itemCount)
     }
 
@@ -122,6 +124,7 @@ class AnswerManageActivity : AppCompatActivity() {
     private fun removeAnswer(pos : Int) {
         db.deleteAnswer(listAnswers[pos])
         listAnswers.removeAt(pos)
+        manageAnswerEmptyText.isVisible = listAnswers.isEmpty()
 
         if(recyclerManageAnswer.adapter!!.hasObservers()) recyclerManageAnswer.adapter!!.notifyItemRemoved(pos)
     }

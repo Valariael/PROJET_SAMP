@@ -1,9 +1,12 @@
 package fr.ledermann.axel.projet_samp.controller
 
 import android.os.AsyncTask
+import android.widget.Toast
+import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Answer
 import fr.ledermann.axel.projet_samp.model.Question
 import fr.ledermann.axel.projet_samp.model.Quizz
+import kotlinx.android.synthetic.main.activity_highscore.*
 import org.w3c.dom.Element
 import java.io.BufferedReader
 import java.io.IOException
@@ -12,17 +15,17 @@ import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
 class XmlHttpQuizz (var qma : QuizzManageActivity){
-    var httpTask = HttpTask()
+    private var httpTask = HttpTask()
 
     fun execute() {
         httpTask.execute()
     }
 
-    inner class HttpTask : AsyncTask<Void, Void, Void>() {
-        override fun doInBackground(vararg params: Void): Void? {
+    inner class HttpTask : AsyncTask<Void, Void, Boolean>() {
+        override fun doInBackground(vararg params: Void): Boolean {
             val bufferedReader: BufferedReader? = null
             var urlConnection: HttpURLConnection? = null
-
+            var everythingWentWell = true
 
             try {
                 val url = URL("https://dept-info.univ-fcomte.fr/joomla/images/CR0700/Quizzs.xml")
@@ -97,29 +100,33 @@ class XmlHttpQuizz (var qma : QuizzManageActivity){
                     }
 
                 } else {
-                    //TODO: error handling
+                    everythingWentWell = false
                 }
             } catch (e: Exception) {
-                //TODO: error handling
+                everythingWentWell = false
             } finally {
                 if (bufferedReader != null) {
                     try {
                         bufferedReader.close()
                     } catch (e: IOException) {
-                        //TODO: error handling
+                        everythingWentWell = false
                     }
 
                 }
                 urlConnection?.disconnect()
             }
 
-            return null
+            return everythingWentWell
         }
 
-        override fun onPostExecute(result: Void?) {
-            qma.quizzList.clear()
-            qma.quizzList.addAll(qma.db.getQuizzs())
-            qma.updateList()
+        override fun onPostExecute(result: Boolean) {
+            if(result) {
+                qma.quizzList.clear()
+                qma.quizzList.addAll(qma.db.getQuizzs())
+                qma.updateList()
+            } else {
+                Toast.makeText(qma, R.string.http_error_text, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

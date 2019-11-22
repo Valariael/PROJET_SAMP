@@ -44,4 +44,6 @@
     <string name="toast_reset">Les données ont été réinitialisées.</string>
     <string name="toast_good">Correct ! Bien joué !</string>
     <string name="toast_bad">Erreur ! Dommage..</string>
+    <string name="empty_text">- Vide -</string>
+    <string name="http_error_text">Une erreur est survenue pendant le téléchargement..</string>
 </resources>

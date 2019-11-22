@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_highscore.*
 import android.widget.ArrayAdapter
 import android.view.View
 import android.widget.AdapterView
+import androidx.core.view.isVisible
 import fr.ledermann.axel.projet_samp.R
 import fr.ledermann.axel.projet_samp.model.Quizz
 import fr.ledermann.axel.projet_samp.model.QuizzDBHelper
@@ -40,8 +41,9 @@ class HighscoreActivity : AppCompatActivity() {
             idCurrentQuizz = listQuizz[0].idQuizz!!
             listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
         }
-        else if(idCurrentQuizz == null) //TODO empty msg
         else listScores.addAll(db.getScores(isHighscores, idCurrentQuizz!!))
+
+        highscoreEmptyText.isVisible = listScores.isEmpty()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
